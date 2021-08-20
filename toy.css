@@ -166,12 +166,19 @@ input[type=range]:focus::-ms-fill-upper {
 }
 /**END SLIDERS**/
 
-
+/** BEGIN selection menu **/
 div.center {
   display: block;
   margin: auto;
   width: 80%;
 }
+
+div.top {
+  margin-bottom: 10px;
+  width: 50%;
+}
+/** END selection menu **/
+
 
 /**BEGIN TABS**/
 /* Tabs mit radio-Buttons */
