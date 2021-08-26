@@ -1,0 +1,74 @@
+---
+title: Data Viz
+layout: default
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+<!--<link rel="stylesheet" href="toy.css">-->
+
+</head>
+<body>
+<h1>Abstract and Concrete Concepts</h1>
+<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+
+<div class="menu-center top ">
+  <div class="choices">
+  <label for="training_time_select">Training Time</label>
+  <select name="training_time_select" class="training_time_select" id="training_time_select" first="false">
+    <option value="2000tt">2000tt</option>
+    <option value="4000tt">4000tt</option>
+  </select>
+  </div>
+</div>
+
+<!--Begin Result Tabs-->
+<div class="tabbed">
+  <input checked="checked" id="tab1" type="radio" name=tabs/>
+  <input id="tab2" type="radio" name=tabs/>
+  <nav>
+    <label for="tab1">Concrete</label>
+    <label for="tab2">Abstract</label>
+  </nav>
+  <figure>
+    <div class="tab1">
+      <div class="menu-center">
+        <div class="choices">
+        <label for="concrete_concept_select"><b>Concept</b></label>
+        <div id="concrete_concept_output"></div>
+        <input id="concrete_concept_select" class="slider" type="range" min="0", value="0", max="9" step="1">
+        </div>
+        <div class="choices">
+        <label for="concrete_model_select"><b>Model</b></label>
+        <div id="concrete_model_output"></div>
+        <input id="concrete_model_select" class="slider" type="range" min="0", value="0", max="11" step="1">
+        </div>
+      </div>
+      <img id="result_concrete" src="https://raw.githubusercontent.com/erc-matco/erc-matco.github.io/master/images/neurogrids_v2_images_8c5_th75_cs0/__hia_M01_P01_con50sc_2000tt_ALL_wORIG.png" />
+    </div>
+    <div class="tab2">
+      <div class="menu-center">
+        <div class="choices">
+        <label for="abstract_concept_select"><b>Concept</b></label>
+        <div id="abstract_concept_output"></div>
+        <input id="abstract_concept_select" class="slider" type="range" min="0", value="0", max="9" step="1">
+        </div>
+        <div class="choices">
+        <label for="abstract_model_select"><b>Model</b></label>
+        <div id="abstract_model_output"></div>
+        <input id="abstract_model_select" class="slider" type="range" min="0", value="0", max="11" step="1">
+        </div>
+      </div>
+        <img id="result_abstract" src="https://raw.githubusercontent.com/erc-matco/erc-matco.github.io/master/images/neurogrids_v2_images_8c5_th75_cs0/__hia_M01_P01_pair33sc_2000tt_ALL_wORIG.png" />
+    </div>
+  </figure>
+
+
+
+</div>
+
+</body>
+<script src="selectPics.js"></script>
+</html>
