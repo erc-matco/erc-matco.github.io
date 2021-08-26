@@ -12,26 +12,37 @@ p.todo::before {
   content: "To Do: ";
 }
 
-/* Side-by-side display */
-.grid-container {
-	width: 100%;
-	margin: auto;
-  display: grid;
-  grid-template-columns: auto auto;
-	grid-template-rows: auto auto;
-  grid-gap: 7px;
-	box-sizing: border-box;
+/** BEGIN selection menu **/
+div.top {
+  margin-bottom: 10px;
+  width: 50%;
 }
 
-.grid-container img {
-	object-fit: cover;
-	/*width: 100%;*/
-	height: auto;
-  max-height: 750px;
+div.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 div.choices {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  /*width: 80%;*/
+}
+
+div.menu-center {
+  text-align:center;
+  display:inline-block;
+  width:100%;
+}
+
+/** END selection menu **/
+
+/* BEGIN tab menu */
+div.choices {
   display: inline-block;
+  width: 30%;
 }
 
 div.choices label {
@@ -49,6 +60,11 @@ select {
 
 select:hover {
   background-color: #5B8E28;
+}
+/* END tab menu */
+
+img {
+    height: 690px;
 }
 
 /**BEGIN SLIDERS**/
@@ -88,7 +104,6 @@ input[type=range]::-webkit-slider-thumb {
   background: #ffffff;
   cursor: pointer;
   margin-top: -9px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
 }
 
 /* All the same stuff for Firefox */
@@ -104,8 +119,8 @@ input[type=range]::-moz-range-thumb {
 
 /* All the same stuff for IE */
 input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
+  /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
+  /*border: 1px solid #000000;*/
   height: 26px;
   width: 12px;
   border-radius: 3px;
@@ -117,10 +132,9 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  /*box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;*/
   background: #99CC00;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
+  border-radius: 5px;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
@@ -166,18 +180,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 /**END SLIDERS**/
 
-/** BEGIN selection menu **/
-div.center {
-  display: block;
-  margin: auto;
-  width: 80%;
-}
 
-div.top {
-  margin-bottom: 10px;
-  width: 50%;
-}
-/** END selection menu **/
 
 
 /**BEGIN TABS**/

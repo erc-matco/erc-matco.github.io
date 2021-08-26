@@ -91,6 +91,36 @@ kbd {
   vertical-align: middle;
 }
 
+.wrapper {
+  /*width:860px;*/
+  width: 90%;
+  margin:0 auto;
+}
+
+header {
+  /*width:270px;*/
+  width: 20%;
+  float:left;
+  position:fixed;
+  -webkit-font-smoothing:subpixel-antialiased;
+}
+
+section {
+  /*width:500px;*/
+  width:75%;
+  float:right;
+  padding-bottom:50px;
+}
+
+footer {
+  /*width:270px;*/
+  width: 10%;
+  float:left;
+  position:fixed;
+  bottom:50px;
+  -webkit-font-smoothing:subpixel-antialiased;
+}
+
 nav a {
   display: block;
 }
@@ -141,6 +171,8 @@ strong {
   display:block;
   color:#222;
 }
+
+
 
 hr {
   border:0;
