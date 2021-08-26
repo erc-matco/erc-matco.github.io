@@ -10,7 +10,11 @@ The European Research Council (ERC) is one of the most prestigious European fund
 
 ## Project Profile
 **Project title:** MatCo (Material Constraints Enabling Human Cognition)
+
 **Aim:** Answering questions about mechanisms underlying specifically human cognitive capacities by focussing on neural modelling with brain constrained networks
+
 **Principle investigator (PI):** Prof. Friedemann Pulvermüller
+
 **Planned duration:** 2020-2025
+
 **Funded by:** European Research Council
