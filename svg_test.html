@@ -1,0 +1,106 @@
+---
+title: SVG Test
+layout: default
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+<!--<link rel="stylesheet" href="toy.css">-->
+</head>
+<body>
+<div class="area-grid">
+  <div class="row-1">
+    <div class="area" id="area1"></div>
+    <div class="area" id="area2"></div>
+    <div class="area" id="area3"></div>
+    <div class="area" id="area4"></div>
+    <div class="area" id="area5"></div>
+    <div class="area" id="area6"></div>
+  </div>
+  <div class="row-2">
+    <div class="area" id="area7"></div>
+    <div class="area" id="area8"></div>
+    <div class="area" id="area9"></div>
+    <div class="area" id="area10"></div>
+    <div class="area" id="area11"></div>
+    <div class="area" id="area12"></div>
+  </div>
+</div>
+<!--Following tutorial: http://xahlee.info/js/js_scritping_svg_basics.html-->
+<script>
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  {
+    const drawArea = ((area, CAList) => {
+      // create the svg element
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+
+      // set width and height
+      svg.setAttribute("width", "160");
+      svg.setAttribute("height", "160");
+
+      // create a circle
+      const background = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "rect",
+      );
+      background.setAttribute("width", "160");
+      background.setAttribute("height", "160");
+      background.setAttribute("fill", "black");
+      background.setAttribute("class", "background");
+
+      // attach it to the container
+      svg.appendChild(background);
+      width = 5;
+      height = width;
+      oldX = 5;
+      oldY = 5;
+      for (var i = 0; i < 25; i++) {
+        for (var j = 0; j < 25; j++) {
+          newX = oldX + (width*j + 1*j);
+          newY = oldY + (height*i + 1*i);
+          cellID = j + i*25 + 1;
+          const cell = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect",
+          );
+          cell.setAttribute("x", String(newX));
+          cell.setAttribute("y", String(newY));
+          cell.setAttribute("width", String(width));
+          cell.setAttribute("height", String(height));
+          cell.setAttribute("fill", "Gray");
+          cell.setAttribute("id", String(cellID));
+          if (CAList.includes(cellID)) {
+            //cell.setAttribute("class", "CA");
+            cell.setAttribute("fill", "LightGray");
+            cell.setAttribute("class", "CA");
+          }
+
+          svg.appendChild(cell);
+          //oldX = newX;
+          //oldY = newY;
+        }
+      }
+
+      // attach container to document
+      document.getElementById(area).appendChild(svg);
+    });
+
+    areas = ["area1", "area2", "area3",
+             "area4", "area5", "area6",
+             "area7", "area8", "area9",
+             "area10", "area11", "area12"];
+   for (var i = 0; i < areas.length; i++) {
+     drawArea(areas[i], [16+getRandomInt(50),183+getRandomInt(50),195+getRandomInt(50),211+getRandomInt(50),241+getRandomInt(50),295+getRandomInt(50),365+i,367+getRandomInt(50),412+getRandomInt(50),446+getRandomInt(50)]);
+   }
+    //drawArea("area1", [114,142,173,192,205,235,240,253,317,356,362,416,463]);
+    //drawArea("area2", [16,183,195,211,241,295,365,367,412,446]);
+  }
+</script>
+
+</body>
+
+</html>
