@@ -11,20 +11,28 @@ layout: default
 <body>
 <div class="area-grid">
   <div class="row-1">
-    <div class="area" id="area1"></div>
-    <div class="area" id="area2"></div>
-    <div class="area" id="area3"></div>
-    <div class="area" id="area4"></div>
-    <div class="area" id="area5"></div>
-    <div class="area" id="area6"></div>
+    <div class="functional-cortex" id="visual">
+      <div class="area" id="area1"><p>V1</p></div>
+      <div class="area" id="area2"><p>TO</p></div>
+      <div class="area" id="area3"><p>AT</p></div>
+    </div>
+    <div class="functional-cortex" id="motor">
+      <div class="area" id="area4"><p>PF<sub>L</sub></p></div>
+      <div class="area" id="area5"><p>PM<sub>L</sub></p></div>
+      <div class="area" id="area6"><p>M1<sub>L</sub></p></div>
+    </div>
   </div>
   <div class="row-2">
-    <div class="area" id="area7"></div>
-    <div class="area" id="area8"></div>
-    <div class="area" id="area9"></div>
-    <div class="area" id="area10"></div>
-    <div class="area" id="area11"></div>
-    <div class="area" id="area12"></div>
+    <div class="functional-cortex" id="auditory">
+      <div class="area" id="area7"><p>A1</p></div>
+      <div class="area" id="area8"><p>AB</p></div>
+      <div class="area" id="area9"><p>PB</p></div>
+    </div>
+    <div class="functional-cortex" id="articulatory">
+      <div class="area" id="area10"><p>PF<sub>i</sub></p></div>
+      <div class="area" id="area11"><p>PM<sub>i</sub></p></div>
+      <div class="area" id="area12"><p>M1<sub>i</sub></p></div>
+    </div>
   </div>
 </div>
 <!--Following tutorial: http://xahlee.info/js/js_scritping_svg_basics.html-->
@@ -41,8 +49,10 @@ layout: default
       // set width and height
       svg.setAttribute("width", "160");
       svg.setAttribute("height", "160");
+      svg.setAttribute("viewBox", "0 0 160 160");
+      svg.setAttribute("display", "block");
 
-      // create a circle
+      // create black neurogrid bg
       const background = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "rect",
@@ -74,14 +84,11 @@ layout: default
           cell.setAttribute("fill", "Gray");
           cell.setAttribute("id", String(cellID));
           if (CAList.includes(cellID)) {
-            //cell.setAttribute("class", "CA");
             cell.setAttribute("fill", "LightGray");
             cell.setAttribute("class", "CA");
           }
 
           svg.appendChild(cell);
-          //oldX = newX;
-          //oldY = newY;
         }
       }
 
