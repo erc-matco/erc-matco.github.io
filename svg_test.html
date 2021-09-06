@@ -7,6 +7,7 @@ layout: default
 <html>
 <head>
 <!--<link rel="stylesheet" href="toy.css">-->
+<script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="area-grid">
@@ -101,11 +102,52 @@ layout: default
              "area7", "area8", "area9",
              "area10", "area11", "area12"];
    for (var i = 0; i < areas.length; i++) {
-     drawArea(areas[i], [16+getRandomInt(50),183+getRandomInt(50),195+getRandomInt(50),211+getRandomInt(50),241+getRandomInt(50),295+getRandomInt(50),365+i,367+getRandomInt(50),412+getRandomInt(50),446+getRandomInt(50)]);
+     drawArea(areas[i], [getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625),getRandomInt(625)]);
    }
-    //drawArea("area1", [114,142,173,192,205,235,240,253,317,356,362,416,463]);
-    //drawArea("area2", [16,183,195,211,241,295,365,367,412,446]);
   }
+</script>
+
+<script type="text/javascript">
+  // Parsing a FELIX output text file for area, pattern
+  $.ajax({
+    url: '../assets/sample_data_ts_thresh_CAs.txt',
+    dataType: 'text',
+    success: function processData(allText) {
+      var dat = new Object();
+      var allTextLines = allText.split(/\r\n|\n/);
+      var headers = allTextLines[0].split('\t');
+      //var lines = []; //alternative solution for full line by line parse
+      for (var j=0; j<headers.length; j++) {
+        dat[headers[j]] = [];
+      }
+
+      for (var i=1; i<allTextLines.length; i++) {
+          var data = allTextLines[i].split('\t');
+          if (data.length == headers.length) {
+              //var tarr = [];
+              for (var j=0; j<headers.length; j++) {
+                  //tarr.push(headers[j]+":"+data[j]);
+                  dat[headers[j]] = dat[headers[j]].concat(data[j]);
+                  //tarr.push(data[j]);
+              }
+              //lines.push(tarr);
+          }
+      }
+      return dat;
+    }
+  }).done(printData);
+
+  function printData(dat) {
+
+    console.log(dat);
+    for (var i = 0; i < 12; i++) {
+      var pattern = dat["CA"];
+      var pattern = pattern[i];
+      console.log(pattern);
+    }
+  }
+
+
 </script>
 
 </body>
