@@ -13,6 +13,30 @@ layout: default
 </head>
 
 <body>
+  <div class="menu-center">
+    <label for="pattern_select"><b>Pattern</b></label>
+    <div id="pattern_output"></div>
+    <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1">
+
+    <label for="model_select"><b>Model (only M01 on file)</b></label>
+    <div id="model_output"></div>
+    <input id="model_select" class="slider" type="range" min="0", value="0", max="0" step="1">
+
+    <div class="choices">
+      <label for="training_time_select">Training Time</label>
+      <select name="training_time_select" class="training_time_select" id="training_time_select">
+        <option value="4000tt">4000tt</option>
+      </select>
+    </div>
+    <div class="choices">
+      <label for="type_select">Type</label>
+      <select name="type_select" class="type_select" id="type_select">
+        <option value="con50sc">con50sc</option>
+        <option value="pair33sc">pair33sc</option>
+      </select>
+    </div>
+  </div>
+
   <div class="area-grid">
     <div class="row-1">
       <div class="functional-cortex" id="visual">
