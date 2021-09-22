@@ -1,3 +1,5 @@
+//TODO: maybe d3js join logic can speed this up
+
 const width = 5;
 const height = width;
 const areas = [1,2,3,4,5,6,7,8,9,10,11,12];
@@ -9,95 +11,50 @@ var oldX = 5;
 var oldY = 5;
 
 // Draw Instance Circles
-var svg = d3.select("#instance-1")
-          .append("svg")
-          .attr("width", 80)
-          .attr("height", 160)
-          .attr('viewBox', '0 0 80 160')
-          .attr('display', 'block');
-svg.append("circle")
-  .attr("cx", "40")
-  .attr("cy", "80")
-  .attr("r", "35")
-  .attr("fill", "LightGray")
-  .attr("stroke", "Gray")
-  .attr("stroke-width", "2")
-svg.append("text")
-  .attr("x", "50%")
-  .attr("y", "50%")
-  .attr("text-anchor", "middle")
-  .attr("alignment-baseline", "middle")
-  .attr("class", "heavy")
-  .text("i1")
+function drawInstance(instance_id) {
+  var svg = d3.select(instance_id)
+            .append("svg")
+            .attr("width", 80)
+            .attr("height", 160)
+            .attr('viewBox', '0 0 80 160')
+            .attr('display', 'block');
+  svg.append("circle")
+    .attr("cx", "40")
+    .attr("cy", "80")
+    .attr("r", "35")
+    .attr("fill", "LightGray")
+    .attr("stroke", "Gray")
+    .attr("stroke-width", "2")
+  if (instance_id != "#overlay") {
+    svg.append("text")
+      .attr("x", "50%")
+      .attr("y", "50%")
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("class", "heavy")
+      .text(instance_id.slice(1,2) + instance_id.slice(-1))
+  } else {
+    svg.append("text")
+      .attr("x", "50%")
+      .attr("y", "50%")
+      .attr("text-anchor", "middle")
+      .attr("class", "heavy-ish")
+      .text("Over")
+    svg.append("text")
+      .attr("x", "50%")
+      .attr("y", "50%")
+      .attr("dy", "20pt")
+      .attr("text-anchor", "middle")
+      .attr("class", "heavy-ish")
+      .text("lay")
+  }
+};
 
-var svg = d3.select("#instance-2")
-          .append("svg")
-          .attr("width", 80)
-          .attr("height", 160)
-          .attr('viewBox', '0 0 80 160')
-          .attr('display', 'block');
-svg.append("circle")
-  .attr("cx", "40")
-  .attr("cy", "80")
-  .attr("r", "35")
-  .attr("fill", "LightGray")
-  .attr("stroke", "Gray")
-  .attr("stroke-width", "2")
-svg.append("text")
-  .attr("x", "50%")
-  .attr("y", "50%")
-  .attr("text-anchor", "middle")
-  .attr("alignment-baseline", "middle")
-  .attr("class", "heavy")
-  .text("i2")
-
-var svg = d3.select("#instance-3")
-          .append("svg")
-          .attr("width", 80)
-          .attr("height", 160)
-          .attr('viewBox', '0 0 80 160')
-          .attr('display', 'block');
-svg.append("circle")
-  .attr("cx", "40")
-  .attr("cy", "80")
-  .attr("r", "35")
-  .attr("fill", "LightGray")
-  .attr("stroke", "Gray")
-  .attr("stroke-width", "2")
-svg.append("text")
-  .attr("x", "50%")
-  .attr("y", "50%")
-  .attr("text-anchor", "middle")
-  .attr("alignment-baseline", "middle")
-  .attr("class", "heavy")
-  .text("i3")
-
-var svg = d3.select("#overlay")
-          .append("svg")
-          .attr("width", 80)
-          .attr("height", 160)
-          .attr('viewBox', '0 0 80 160')
-          .attr('display', 'block');
-svg.append("circle")
-  .attr("cx", "40")
-  .attr("cy", "80")
-  .attr("r", "35")
-  .attr("fill", "LightGray")
-  .attr("stroke", "Gray")
-  .attr("stroke-width", "2")
-svg.append("text")
-  .attr("x", "50%")
-  .attr("y", "50%")
-  .attr("text-anchor", "middle")
-  .attr("class", "heavy-ish")
-  .text("Over")
-svg.append("text")
-  .attr("x", "50%")
-  .attr("y", "50%")
-  .attr("dy", "20pt")
-  .attr("text-anchor", "middle")
-  .attr("class", "heavy-ish")
-  .text("lay")
+//TODO: grab all .instance divs and drawInstance their IDs for an automatic, scalable solution
+drawInstance("#instance-1");
+drawInstance("#instance-2");
+drawInstance("#instance-3");
+drawInstance("#overlay");
 
 d3.tsv("/assets/CAbyinstance_data_2ktt4ktt.txt").then( function(data, model="M01",
                                type="con50sc",
@@ -120,13 +77,13 @@ d3.tsv("/assets/CAbyinstance_data_2ktt4ktt.txt").then( function(data, model="M01
             .attr("fill", "#404040")
             .attr("class", "background");
         // Read data
-        var data_subset = data.filter(function(d) {
-          return (d.AreaAbs == areas[area_num]
-                   && d.Model == model
-                   && d.Type == type
-                   && d.TrainingTrials == trainingtrials
-                   && d.Pattern3i == pattern)});
-        var CA = data_subset[0].CAi_1.split('#').map(Number);
+        // var data_subset = data.filter(function(d) {
+        //   return (d.AreaAbs == areas[area_num]
+        //            && d.Model == model
+        //            && d.Type == type
+        //            && d.TrainingTrials == trainingtrials
+        //            && d.Pattern3i == pattern)});
+        // var CA = data_subset[0].CAi_1.split('#').map(Number);
 
         // Draw individual cells
         // fill and class changes according to
@@ -142,18 +99,8 @@ d3.tsv("/assets/CAbyinstance_data_2ktt4ktt.txt").then( function(data, model="M01
                .attr("width", String(width))
                .attr("height", String(height))
                .attr("id", "cell" + String(cellID))
-               .attr("fill", function (d) { // is in CA?
-                 if (CA.includes(cellID)) {
-                   return "LightGray";
-                 }
-                 return "Gray";
-               })
-               .attr("class", function (d) { // is in CA?
-                 if (CA.includes(cellID)) {
-                   return "cell CA";
-                 }
-                 return "cell nonCA";
-               })
+               .attr("fill", "Gray")
+               .attr("class", "cell nonCA")
           } // END j
         } // END i
     } // END for area number
@@ -190,19 +137,19 @@ function grid2column(data_subset, grid_class) {
     case ".grid-1": {
       const CA = {
         data: data_subset[0].CAi_1.split('#'),
-        color: "#f62621"
+        color: "red"
       };
       return CA;}
     case ".grid-2": {
       const CA = {
         data: data_subset[0].CAi_2.split('#'),
-        color: "#368fd8"
+        color: "blue"
       };
       return CA;}
     case ".grid-3": {
       const CA = {
         data: data_subset[0].CAi_3.split('#'),
-        color: "#08aa53"
+        color: "green"
       };
       return CA;}
     case ".overlay": {
