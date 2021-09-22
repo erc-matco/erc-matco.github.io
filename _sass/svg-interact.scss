@@ -41,7 +41,7 @@ $i_2_3: #4cf6fa;
 }
 
 .heavy {
-  font-size: 30pt;
+  font-size: 25pt;
   font-style: bold;
 }
 
@@ -104,10 +104,6 @@ $i_2_3: #4cf6fa;
 .area svg {
   width: 100%;
   height: auto;
-}
-
-.area svg::after {
-  content: "HELLO";
 }
 
 rect.CA:hover {
