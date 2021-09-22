@@ -1,38 +1,72 @@
+/*Colors*/
+$i1: #f62621;
+
+$i2: #368fd8;
+
+$i3: #08aa53;
+
+$all: white;
+
+$i1_2: #ec03db;
+
+$i_1_3: #e6e203;
+
+$i_2_3: #4cf6fa;
+
+// $i_test: mix($i1, $i2);
+// $i_test: mix($i1, $i3);
+// $i_test: mix($i2, $i3);
+
 * {
   box-sizing: border-box;
 }
 
-.area {
-  display: inline-block;
-  float: left;
-  width: 33.33%;
-  height: auto;
+.menu-center {
+  max-width: 75%;
 }
+
+.head img {
+  float: right;
+  max-width: 25%;
+}
+
+.grid-wrapper {
+  /*width: 50%;
+  max-height: 150px;
+  border: 2px solid black;*/
+}
+
+.instance {
+  float: left;
+}
+
+.heavy {
+  font-size: 30pt;
+  font-style: bold;
+}
+
+.heavy-ish {
+  font-size: 20pt;
+  font-style: bold;
+}
+
+.area-grid>p, .area-grid-1>p, .area-grid-2>p, .area-grid-3>p, .area-grid-4>p {
+  display: block;
+  position: relative;
+  float: left;
+  height: 300px;
+  /*min-width: 10%;*/
+}
+
 
 .row-1 {
   display: inline-block;
-  width: 100%;
+  width: 60%;
 }
 
 .row-2 {
   display: inline-block;
-  width: 100%;
-}
-
-.area p {
-  display: block;
-  height: 8px;
-  text-align: center;
-  font-size: 2.0vh;
-}
-
-.area svg {
-  width: 100%;
-  height: auto;
-}
-
-rect.CA:hover {
-	fill: green;
+  width: 60%;
 }
 
 .functional-cortex {
@@ -42,34 +76,85 @@ rect.CA:hover {
   height: auto;
 }
 
+.area {
+  display: inline-block;
+  float: left;
+  width: 33.33%;
+  height: auto;
+}
+
+.row-1 .area p {
+  display: block;
+  height: 8px;
+  text-align: center;
+  font-size: 1vh;
+  display: none;
+}
+
+.row-2 .area p {
+  display: block;
+  position: absolute;
+  height: 8px;
+  text-align: center;
+  bottom: 0;
+  font-size: 1vh;
+  display: none;
+}
+
+.area svg {
+  width: 100%;
+  height: auto;
+}
+
+.area svg::after {
+  content: "HELLO";
+}
+
+rect.CA:hover {
+	fill: green;
+}
+
+
+
 #visual {
-  border-top: 5px solid #4f8031ff;
-  border-bottom: 5px solid #4f8031ff;
-  border-left: 5px solid #4f8031ff;
-  border-radius: 10px 0px 0px 10px;
+  border-top: 3px solid #4f8031ff;
+  // border-bottom: 3px solid #4f8031ff;
+  border-left: 3px solid #4f8031ff;
+  border-radius: 10px 0px 0px 0px;
 }
 
 #motor {
-  border-top: 5px solid #ca6625ff;
-  border-right: 5px solid #ca6625ff;
-  border-bottom: 5px solid #ca6625ff;
-  border-radius: 0px 10px 10px 0px;
+  border-top: 3px solid #ca6625ff;
+  border-right: 3px solid #ca6625ff;
+  // border-bottom: 3px solid #ca6625ff;
+  border-radius: 0px 10px 0px 0px;
 }
 
 #auditory {
-  border-top: 5px solid #2075b6ff;
-  border-bottom: 5px solid #2075b6ff;
-  border-left: 5px solid #2075b6ff;
-  border-radius: 10px 0px 0px 10px;
+  // border-top: 3px solid #2075b6ff;
+  border-bottom: 3px solid #2075b6ff;
+  border-left: 3px solid #2075b6ff;
+  border-radius: 0px 0px 0px 10px;
 }
 
 #articulatory {
-  border-top: 5px solid #e5175eff;
-  border-right: 5px solid #e5175eff;
-  border-bottom: 5px solid #e5175eff;
-  border-radius: 0px 10px 10px 0px;
+  // border-top: 3px solid #e5175eff;
+  border-right: 3px solid #e5175eff;
+  border-bottom: 3px solid #e5175eff;
+  border-radius: 0px 0px 10px 0px;
+}
+
+.hub-top {
+  margin-top: 3px;
+}
+.hub-bottom {
+  margin-top: -3px;
 }
 
 .area-grid {
   margin-top: 10px;
+}
+
+.palette-test {
+  background-color: map-get($base-palette,base);
 }

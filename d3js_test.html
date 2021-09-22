@@ -13,56 +13,166 @@ layout: default
 </head>
 
 <body>
-  <div class="menu-center">
-    <label for="pattern_select"><b>Pattern</b></label>
-    <div id="pattern_output"></div>
-    <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1">
+  <div class="head">
+    <div class="menu-center">
+      <label for="pattern_select"><b>Concept</b></label>
+      <div id="pattern_output"></div>
+      <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1">
 
-    <label for="model_select"><b>Model (only M01 on file)</b></label>
-    <div id="model_output"></div>
-    <input id="model_select" class="slider" type="range" min="0", value="0", max="0" step="1">
+      <label for="model_select"><b>Model</b></label>
+      <div id="model_output"></div>
+      <input id="model_select" class="slider" type="range" min="0", value="0" max="11" step="1">
 
-    <div class="choices">
-      <label for="training_time_select">Training Time</label>
-      <select name="training_time_select" class="training_time_select" id="training_time_select">
-        <option value="4000tt">4000tt</option>
-      </select>
+      <div class="choices">
+        <label for="training_time_select">Training Time</label>
+        <select name="training_time_select" class="training_time_select" id="training_time_select">
+          <option value="4000tt">4000tt</option>
+          <option value="2000tt">2000tt</option>
+        </select>
+      </div>
+      <div class="choices">
+        <label for="type_select">Type</label>
+        <select name="type_select" class="type_select" id="type_select">
+          <option value="con50sc">con50sc</option>
+          <option value="pair33sc">pair33sc</option>
+        </select>
+      </div>
     </div>
-    <div class="choices">
-      <label for="type_select">Type</label>
-      <select name="type_select" class="type_select" id="type_select">
-        <option value="con50sc">con50sc</option>
-        <option value="pair33sc">pair33sc</option>
-      </select>
-    </div>
+
+    <img src="/assets/img/instance_triangle.png" />
   </div>
 
+  <div class="grid-wrapper">
+
   <div class="area-grid">
+    <div class="instance" id="instance-1"></div>
     <div class="row-1">
       <div class="functional-cortex" id="visual">
-        <div class="area" id="area1"><p>V1</p></div>
-        <div class="area" id="area2"><p>TO</p></div>
-        <div class="area" id="area3"><p>AT</p></div>
+        <div class="area grid-1" id="area1"><p>V1</p></div>
+        <div class="area grid-1" id="area2"><p>TO</p></div>
+        <div class="area grid-1 hub-top" id="area3"><p>AT</p></div>
       </div>
       <div class="functional-cortex" id="motor">
-        <div class="area" id="area4"><p>PF<sub>L</sub></p></div>
-        <div class="area" id="area5"><p>PM<sub>L</sub></p></div>
-        <div class="area" id="area6"><p>M1<sub>L</sub></p></div>
+        <div class="area grid-1 hub-top" id="area4"><p>PF<sub>L</sub></p></div>
+        <div class="area grid-1" id="area5"><p>PM<sub>L</sub></p></div>
+        <div class="area grid-1" id="area6"><p>M1<sub>L</sub></p></div>
       </div>
     </div>
     <div class="row-2">
       <div class="functional-cortex" id="auditory">
-        <div class="area" id="area7"><p>A1</p></div>
-        <div class="area" id="area8"><p>AB</p></div>
-        <div class="area" id="area9"><p>PB</p></div>
+        <div class="area grid-1" id="area7"><p>A1</p></div>
+        <div class="area grid-1" id="area8"><p>AB</p></div>
+        <div class="area grid-1 hub-bottom" id="area9"><p>PB</p></div>
       </div>
       <div class="functional-cortex" id="articulatory">
-        <div class="area" id="area10"><p>PF<sub>i</sub></p></div>
-        <div class="area" id="area11"><p>PM<sub>i</sub></p></div>
-        <div class="area" id="area12"><p>M1<sub>i</sub></p></div>
+        <div class="area grid-1 hub-bottom" id="area10"><p>PF<sub>i</sub></p></div>
+        <div class="area grid-1" id="area11"><p>PM<sub>i</sub></p></div>
+        <div class="area grid-1" id="area12"><p>M1<sub>i</sub></p></div>
       </div>
     </div>
   </div>
+<!--Check this out and fiddle it into this code? https://observablehq.com/@d3/calendar-view#chart-->
+  <div class="area-grid-2">
+    <div class="instance" id="instance-2"></div>
+    <div class="row-1">
+      <div class="functional-cortex" id="visual">
+        <div class="area grid-2" id="area1"><p>V1</p></div>
+        <div class="area grid-2" id="area2"><p>TO</p></div>
+        <div class="area grid-2 hub-top" id="area3"><p>AT</p></div>
+      </div>
+      <div class="functional-cortex" id="motor">
+        <div class="area grid-2 hub-top" id="area4"><p>PF<sub>L</sub></p></div>
+        <div class="area grid-2" id="area5"><p>PM<sub>L</sub></p></div>
+        <div class="area grid-2" id="area6"><p>M1<sub>L</sub></p></div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="functional-cortex" id="auditory">
+        <div class="area grid-2" id="area7"><p>A1</p></div>
+        <div class="area grid-2" id="area8"><p>AB</p></div>
+        <div class="area grid-2 hub-bottom" id="area9"><p>PB</p></div>
+      </div>
+      <div class="functional-cortex" id="articulatory">
+        <div class="area grid-2 hub-bottom" id="area10"><p>PF<sub>i</sub></p></div>
+        <div class="area grid-2" id="area11"><p>PM<sub>i</sub></p></div>
+        <div class="area grid-2" id="area12"><p>M1<sub>i</sub></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-grid-3">
+    <div class="instance" id="instance-3"></div>
+    <div class="row-1">
+      <div class="functional-cortex" id="visual">
+        <div class="area grid-3" id="area1"><p>V1</p></div>
+        <div class="area grid-3" id="area2"><p>TO</p></div>
+        <div class="area grid-3 hub-top" id="area3"><p>AT</p></div>
+      </div>
+      <div class="functional-cortex" id="motor">
+        <div class="area grid-3 hub-top" id="area4"><p>PF<sub>L</sub></p></div>
+        <div class="area grid-3" id="area5"><p>PM<sub>L</sub></p></div>
+        <div class="area grid-3" id="area6"><p>M1<sub>L</sub></p></div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="functional-cortex" id="auditory">
+        <div class="area grid-3" id="area7"><p>A1</p></div>
+        <div class="area grid-3" id="area8"><p>AB</p></div>
+        <div class="area grid-3 hub-bottom" id="area9"><p>PB</p></div>
+      </div>
+      <div class="functional-cortex" id="articulatory">
+        <div class="area grid-3 hub-bottom" id="area10"><p>PF<sub>i</sub></p></div>
+        <div class="area grid-3" id="area11"><p>PM<sub>i</sub></p></div>
+        <div class="area grid-3" id="area12"><p>M1<sub>i</sub></p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area-grid-4">
+    <div class="instance" id="overlay"></div>
+    <div class="row-1">
+      <div class="functional-cortex" id="visual">
+        <div class="area overlay" id="area1"><p>V1</p></div>
+        <div class="area overlay" id="area2"><p>TO</p></div>
+        <div class="area overlay hub-top" id="area3"><p>AT</p></div>
+      </div>
+      <div class="functional-cortex" id="motor">
+        <div class="area overlay hub-top" id="area4"><p>PF<sub>L</sub></p></div>
+        <div class="area overlay" id="area5"><p>PM<sub>L</sub></p></div>
+        <div class="area overlay" id="area6"><p>M1<sub>L</sub></p></div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="functional-cortex" id="auditory">
+        <div class="area overlay" id="area7"><p>A1</p></div>
+        <div class="area overlay" id="area8"><p>AB</p></div>
+        <div class="area overlay hub-bottom" id="area9"><p>PB</p></div>
+      </div>
+      <div class="functional-cortex" id="articulatory">
+        <div class="area overlay hub-bottom" id="area10"><p>PF<sub>i</sub></p></div>
+        <div class="area overlay" id="area11"><p>PM<sub>i</sub></p></div>
+        <div class="area overlay" id="area12"><p>M1<sub>i</sub></p></div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!--<div class="test-1">
+    bli bla blubb blobb
+  </div>
+  <div class="test-2">
+    bli bla blubb blobb
+  </div>
+  <div class="test-3">
+    bli bla blubb blobb
+  </div>
+  <div class="test-4">
+    bli bla blubb blobb
+  </div>
+  <div class="test-5">
+    bli bla blubb blobb
+  </div>-->
 
   <script type="text/javascript" src="assets/js/areaGen.js"></script>
 </body>
