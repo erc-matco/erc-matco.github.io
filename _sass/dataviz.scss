@@ -209,8 +209,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 #tab1:checked ~ figure .tab1,
-#tab2:checked ~ figure .tab2,
-#tab3:checked ~ figure .tab3 { display: block; }
+#tab2:checked ~ figure .tab2 { display: block; }
 
 /* Styling the tabs */
 nav label {
