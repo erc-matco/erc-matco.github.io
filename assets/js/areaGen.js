@@ -13,15 +13,52 @@ if (!Object.entries) {
   };
 }
 
-const width = 5;
-const height = width;
-const areas = [1,2,3,4,5,6,7,8,9,10,11,12];
-const pattern_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"];
-const model_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-const grids = [".grid-1", ".grid-2", ".grid-3", ".overlay"];
+let areas = [1,2,3,4,5,6,7,8,9,10,11,12];
+let pattern_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"];
+let model_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+let grids = [".grid-1", ".grid-2", ".grid-3", ".overlay"];
 
-var oldX = 5;
-var oldY = 5;
+const color_palette = {
+  background: "LightGray",
+  nonCA: "white",
+  i_1: "#f62621",
+  i_2: "#368fd8",
+  i_3: "#08aa53",
+  i_1_2: "#ec03db",
+  i_1_3: "#e6e203",
+  i_2_3: "#4cf6fa",
+  i_1_2_3: "black",
+};
+
+function palette_picker() {
+  var palette = document.querySelector('#palette_select').value;
+  d3.selectAll(".background")
+    .attr("class", "background " + palette)
+
+  d3.selectAll(".nonCA")
+    .attr("class", "cell nonCA " + palette)
+
+  d3.selectAll(".i_1_2_3")
+    .attr("class", "cell CA i_1_2_3 " + palette)
+  // switch () {
+  //   case "Pal1 Light":
+  //     color_palette.background = "LightGray";
+  //     color_palette.nonCA = "white";
+  //     color_palette.i_1_2_3 = "black";
+  //     console.log(color_palette);
+  //     break;
+  //   case "Pal1 Dark":
+  //     color_palette.background = "black";
+  //     color_palette.nonCA = "LightGray";
+  //     color_palette.i_1_2_3 = "white";
+  //     console.log(color_palette);
+  //     break;
+  //   default:
+  //     console.error("No valid color palette selected!");
+  // }
+}
+palette_picker();
+
 
 /*** Initializing svgs on website ***/
 function drawInstance(tab_num, instance_id) {
@@ -85,13 +122,18 @@ function drawInitGrid(tab_num, area_id, grid_class) {
   svg.append("rect")
       .attr("width", 160)
       .attr("height", 160)
-      .attr("fill", "#404040")
+      .attr("fill", color_palette.background)
       .attr("class", "background");
   // Draw cells
+  let margin_left = 5;
+  let margin_top = 5;
+  let width = 5;
+  let height = width;
+
   for (var i = 0; i < 25; i++) {
     for (var j = 0; j < 25; j++) {
-      newX = oldX + (width*j + 1*j);
-      newY = oldY + (height*i + 1*i);
+      newX = margin_left + (width*j + 1*j);
+      newY = margin_top + (height*i + 1*i);
       cellID = j + i*25 + 1;
       svg.append("rect")
          .attr("x", String(newX))
@@ -99,7 +141,7 @@ function drawInitGrid(tab_num, area_id, grid_class) {
          .attr("width", String(width))
          .attr("height", String(height))
          .attr("id", "cell" + String(cellID))
-         .attr("fill", "Gray")
+         .attr("fill", color_palette.nonCA)
          .attr("class", "cell nonCA")
     } // END j
   } // END i
@@ -127,16 +169,16 @@ function updateCA(area_id, CA) {
   svg = d3.select(area_id).select('svg');
   // reset all active cells
   svg.selectAll("rect.cell.CA")
-    .attr("fill", "Gray")
+    .attr("fill", color_palette.nonCA)
     .attr("class", "cell nonCA");
   // and draw only the active ones
   for (const [instance, value] of Object.entries(CA)) {
     for (var i = 0; i < value.data.length; i++) {
       if (value.data[i]) {
         var cellID = String(value.data[i]);
-        var col = String(value.color);
+        // var col = String(value.color);
         svg.select("rect#cell" + cellID)
-          .attr("fill", col)
+          .attr("fill", value.color)
           .attr("class", "cell CA " + value.origin)
       } // END if
     }// END for i, data
@@ -166,46 +208,46 @@ function grid2column(data_subset, grid_class) {
   switch (grid_class) {
     case ".grid-1": {
       const CA = {
-        i_1: {data: i_1, color:"#f62621", origin: "i_1"},
-        i_2: {data: [], color:"#368fd8", origin: "i_2"},
-        i_3: {data: [], color:"#08aa53", origin: "i_3"},
-        i_1_2: {data: i_1_2, color:"#ec03db", origin: "i_1_2"},
-        i_1_3: {data: i_1_3, color:"#e6e203", origin: "i_1_3"},
-        i_2_3: {data: [], color:"#4cf6fa", origin: "i_2_3"},
-        i_1_2_3: {data: i_1_2_3, color:"#000", origin: "i_1_2_3"},
+        i_1: {data: i_1, color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: [], color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
       };
       return CA;}
     case ".grid-2": {
       const CA = {
-        i_1: {data: [], color:"#f62621", origin: "i_1"},
-        i_2: {data: i_2, color:"#368fd8", origin: "i_2"},
-        i_3: {data: [], color:"#08aa53", origin: "i_3"},
-        i_1_2: {data: i_1_2, color:"#ec03db", origin: "i_1_2"},
-        i_1_3: {data: [], color:"#e6e203", origin: "i_1_3"},
-        i_2_3: {data: i_2_3, color:"#4cf6fa", origin: "i_2_3"},
-        i_1_2_3: {data: i_1_2_3, color:"#000", origin: "i_1_2_3"},
+        i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: i_2, color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: [], color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
       };
       return CA;}
     case ".grid-3": {
       const CA = {
-        i_1: {data: [], color:"#f62621", origin: "i_1"},
-        i_2: {data: [], color:"#368fd8", origin: "i_2"},
-        i_3: {data: i_3, color:"#08aa53", origin: "i_3"},
-        i_1_2: {data: [], color:"#ec03db", origin: "i_1_2"},
-        i_1_3: {data: i_1_3, color:"#e6e203", origin: "i_1_3"},
-        i_2_3: {data: i_2_3, color:"#4cf6fa", origin: "i_2_3"},
-        i_1_2_3: {data: i_1_2_3, color:"#000", origin: "i_1_2_3"},
+        i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: i_3, color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: [], color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
       };
       return CA;}
     case ".overlay": {
       const CA = {
-        i_1: {data: i_1, color:"#f62621", origin: "i_1"},
-        i_2: {data: i_2, color:"#368fd8", origin: "i_2"},
-        i_3: {data: i_3, color:"#08aa53", origin: "i_3"},
-        i_1_2: {data: i_1_2, color:"#ec03db", origin: "i_1_2"},
-        i_1_3: {data: i_1_3, color:"#e6e203", origin: "i_1_3"},
-        i_2_3: {data: i_2_3, color:"#4cf6fa", origin: "i_2_3"},
-        i_1_2_3: {data: i_1_2_3, color:"#000", origin: "i_1_2_3"},
+        i_1: {data: i_1, color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: i_2, color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: i_3, color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
       };
       return CA;}
     default:
@@ -226,6 +268,8 @@ function getUserValues(tab_num) {
 }
 
 function changeTab(tab_num) {
+  // Update color_palette
+  // palette_picker();
   // Fetch all current settings
   var metadata = getUserValues(tab_num);
   var type = (tab_num === ".tab1") ? "con50sc" : "pair33sc";

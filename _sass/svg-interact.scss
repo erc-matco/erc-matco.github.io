@@ -1,16 +1,29 @@
 /*Colors*/
+$nonCA: #dddddd;
+$background: #bbbbbb;
+$i_1_2_3: black;
+
+// $nonCA: LightGray;
+// $background: black;
+// $i_1_2_3: white;
+
 $i_1: #f62621;
 $i_2: #368fd8;
 $i_3: #08aa53;
 $i_1_2: #ec03db;
-$i_1_3: #e6e203;
-$i_2_3: #4cf6fa;
-$i_1_2_3: black;
+// $i_1_3: #e6e203;
+$i_1_3: #FFFF00;
+// $i_2_3: #4cf6fa;
+$i_2_3: cyan;
+
+
+.palette_select {
+  margin-top: 5px;
+}
 
 // $i_1_2: mix($i_1, $i_2);
 // $i_1_3: mix($i_1, $i_3);
 // $i_2_3: mix($i_2, $i_3);
-$i_1_3: yellow;
 
 * {
   box-sizing: border-box;
@@ -54,7 +67,7 @@ $i_1_3: yellow;
 
 .row-1, .row-2 {
   display: inline-block;
-  width: 70%;
+  width: 66.66%;
 }
 
 .functional-cortex {
@@ -72,12 +85,13 @@ $i_1_3: yellow;
 }
 
 .row-1 .area p {
-  display: block;
+  // display: block;
   height: 8px;
   text-align: center;
   font-size: 1vh;
   display: none;
 }
+
 .row-2 .area p {
   display: block;
   position: absolute;
@@ -94,8 +108,8 @@ $i_1_3: yellow;
 }
 
 // Cell assembly colors
-.nonCA {fill: white;}
-.background {fill: LightGray;}
+.nonCA {fill: $nonCA;}
+.background {fill: $background;}
 .i_1 {fill: $i_1;}
 .i_2 {fill: $i_2;}
 .i_3 {fill: $i_3;}
@@ -104,12 +118,21 @@ $i_1_3: yellow;
 .i_2_3 {fill: $i_2_3;}
 .i_1_2_3 {fill: $i_1_2_3;}
 
+.background.dark {fill: black;}
+.nonCA.dark {fill: Gray;}
+.i_1_2_3.dark {fill:white;}
+
 .hub-top {
   margin-top: 6px;
 }
 .hub-bottom {
   margin-top: -6px;
 }
+
+// .tab1 {
+//   background: black;
+// }
+
 
 // #visual {
 //   border-top: 3px solid #4f8031ff;

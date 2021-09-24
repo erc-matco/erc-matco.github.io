@@ -14,6 +14,16 @@ layout: default
 
 <body>
 
+  <script type="text/javascript">
+  	function showLabels() {
+  		document.querySelector(".area p").style.display="block";
+  	}
+
+    function hideLabels() {
+  		document.querySelector(".area p").style.display="none";
+  	}
+	</script>
+
   <!--Begin Result Tabs-->
   <div class="tabbed">
     <input checked="checked" id="tab1" type="radio" name=tabs/>
@@ -43,6 +53,13 @@ layout: default
             </select>
           </div>
           <div class="choices">
+            <label for="palette_select">Color Palette</label>
+            <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker()">
+              <option value="pal1 light">Pal1 Light</option>
+              <option value="pal1 dark">Pal1 Dark</option>
+            </select>
+          </div>
+          <div class="choices">
             <img src="/assets/img/instance_triangle.png" />
           </div>
         </div>
@@ -51,7 +68,7 @@ layout: default
         <div class="instance" id="instance-1"></div>
         <div class="row-1">
           <div class="functional-cortex" id="visual">
-            <div class="area grid-1" id="area1"><p>V1</p></div>
+            <div class="area grid-1" id="area1" onmouseover="showLabels()" onmouseout="hideLabels()"><p>V1</p></div>
             <div class="area grid-1" id="area2"><p>TO</p></div>
             <div class="area grid-1 hub-top" id="area3"><p>AT</p></div>
           </div>
@@ -179,6 +196,16 @@ layout: default
             <option value="4000tt">4000tt</option>
             <option value="2000tt">2000tt</option>
           </select>
+        </div>
+        <div class="choices">
+          <label for="palette_select">Color Palette</label>
+          <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker()">
+            <option value="pal1 light">Pal1 Light</option>
+            <option value="pal1 dark">Pal1 Dark</option>
+          </select>
+        </div>
+        <div class="choices">
+          <img src="/assets/img/instance_triangle.png" />
         </div>
       </div>
     <div class="grid-wrapper">
