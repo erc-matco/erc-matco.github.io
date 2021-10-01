@@ -16,6 +16,13 @@ $i_1_3: #FFFF00;
 // $i_2_3: #4cf6fa;
 $i_2_3: cyan;
 
+.full {
+  padding: 0px;
+  background-color: #002b36;
+}
+.wide {
+  width: 90%;
+}
 
 .palette_select {
   margin-top: 5px;
@@ -72,6 +79,7 @@ $i_2_3: cyan;
 }
 
 #overlay {
+  padding-top: 50px;
   grid-column-start: 1;
   grid-row-start: 4;
 }
@@ -107,7 +115,7 @@ $i_2_3: cyan;
 
 .row-1, .row-2 {
   display: inline-block;
-  width: 75%;
+  width: 80%;
 }
 
 .heavy {font-size: 20pt; font-style: bold;}
@@ -156,35 +164,18 @@ $i_2_3: cyan;
   // border: 2px solid red;
 }
 
+.hline-top {
+  // width: 80%;
+  padding-top: 10px;
+  border-top: 2px solid #93a1a1; /* whichever color you prefer */
+}
+
 
 
 
 // .tooltip {
 //   // position: relative;
 // }
-
-
-
-// Cell assembly colors
-.nonCA {fill: $nonCA;}
-.background {fill: $background;}
-.i_1 {fill: $i_1;}
-.i_2 {fill: $i_2;}
-.i_3 {fill: $i_3;}
-.i_1_2 {fill: $i_1_2;}
-.i_1_3 {fill: $i_1_3;}
-.i_2_3 {fill: $i_2_3;}
-.i_1_2_3 {fill: $i_1_2_3;}
-
-.background.dark {fill: black;}
-.nonCA.dark {fill: Gray;}
-.i_1.dark {fill: $i_1;}
-.i_2.dark {fill: $i_2;}
-.i_3.dark {fill: $i_3;}
-.i_1_2.dark {fill: $i_1_2;}
-.i_1_3.dark {fill: $i_1_3;}
-.i_2_3.dark {fill: $i_2_3;}
-.i_1_2_3.dark {fill: white;}
 
 // Solarized
 $base03:    #002b36;
@@ -214,6 +205,30 @@ $darkbluer:  #0072B2;
 $darkoranger: #D55E00;
 $pinkr:       #CC79A7;
 
+// Cell assembly colors
+
+.background {fill: Gray;}
+.nonCA {fill: DarkGray;}
+.i_1 {fill: $i_1;}
+.i_2 {fill: $i_2;}
+.i_3 {fill: $i_3;}
+.i_1_2 {fill: $i_1_2;}
+.i_1_3 {fill: $i_1_3;}
+.i_2_3 {fill: $i_2_3;}
+.i_1_2_3 {fill: $i_1_2_3;}
+
+.background.dark {fill: Gray;}
+.nonCA.dark {fill: DarkGray;}
+.i_1.dark {fill: $i_1;}
+.i_2.dark {fill: $i_2;}
+.i_3.dark {fill: $i_3;}
+.i_1_2.dark {fill: $i_1_2;}
+.i_1_3.dark {fill: $i_1_3;}
+.i_2_3.dark {fill: $i_2_3;}
+.i_1_2_3.dark {fill: white;}
+
+
+
 .background.solarized-dark {fill: $base1;}
 .nonCA.solarized-dark {fill: $base0;}
 .i_1.solarized-dark {fill: $red;}
@@ -234,8 +249,8 @@ $pinkr:       #CC79A7;
 .i_2_3.solarized-light {fill: $cyan;}
 .i_1_2_3.solarized-light {fill: $base03;}
 
-.background.r-colorblind {fill: $background;}
-.nonCA.r-colorblind {fill: $nonCA;}
+.background.dark {fill: Gray;}
+.nonCA.dark {fill: DarkGray;}
 .i_1.r-colorblind {fill: $darkoranger;}
 .i_2.r-colorblind {fill: $darkbluer;}
 .i_3.r-colorblind {fill: $greenr;}

@@ -230,7 +230,7 @@ function drawPaletteTriangle(tab){
        .attr("alignment-baseline", "middle")
        .attr("transform", "rotate(310, " + x_i_1_3 + ", " + y_i_1_3 + ")")
        .attr("class", "heavy-ish")
-       .text("i3+i1")
+       .html("i3 &middot;	i1")
     svg.append("text")
        .attr("x", x_i_1_2)
        .attr("y", y_i_1_2-radius-5)
@@ -240,7 +240,7 @@ function drawPaletteTriangle(tab){
        .attr("alignment-baseline", "middle")
        .attr("transform", "rotate(50, " + x_i_1_2 + ", " + y_i_1_2 + ")")
        .attr("class", "heavy-ish")
-       .text("i1+i2")
+       .html("i1 &middot;	i2")
     svg.append("text")
        .attr("x", x_i_2_3)
        .attr("y", y_i_2_3+radius+7)
@@ -249,7 +249,7 @@ function drawPaletteTriangle(tab){
        .attr("text-anchor", "middle")
        .attr("alignment-baseline", "middle")
        .attr("class", "heavy-ish")
-       .text("i3+i2")
+       .html("i3 &middot;	i2")
 }
 drawPaletteTriangle(".tab1");
 drawPaletteTriangle(".tab2");
