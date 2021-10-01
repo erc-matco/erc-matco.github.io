@@ -18,6 +18,8 @@ let pattern_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"
 let model_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 let grids = [".grid-1", ".grid-2", ".grid-3", ".overlay"];
 
+
+
 const color_palette = {
   background: "LightGray",
   nonCA: "white",
@@ -38,26 +40,219 @@ function palette_picker() {
   d3.selectAll(".nonCA")
     .attr("class", "cell nonCA " + palette)
 
+  d3.selectAll(".i_1")
+    .attr("class", "cell CA i_1 " + palette)
+  d3.selectAll(".i_2")
+    .attr("class", "cell CA i_2 " + palette)
+  d3.selectAll(".i_3")
+    .attr("class", "cell CA i_3 " + palette)
+  d3.selectAll(".i_1_2")
+    .attr("class", "cell CA i_1_2 " + palette)
+  d3.selectAll(".i_1_3")
+    .attr("class", "cell CA i_1_3 " + palette)
+  d3.selectAll(".i_2_3")
+    .attr("class", "cell CA i_2_3 " + palette)
   d3.selectAll(".i_1_2_3")
     .attr("class", "cell CA i_1_2_3 " + palette)
-  // switch () {
-  //   case "Pal1 Light":
-  //     color_palette.background = "LightGray";
-  //     color_palette.nonCA = "white";
-  //     color_palette.i_1_2_3 = "black";
-  //     console.log(color_palette);
-  //     break;
-  //   case "Pal1 Dark":
-  //     color_palette.background = "black";
-  //     color_palette.nonCA = "LightGray";
-  //     color_palette.i_1_2_3 = "white";
-  //     console.log(color_palette);
-  //     break;
-  //   default:
-  //     console.error("No valid color palette selected!");
-  // }
 }
 palette_picker();
+
+function toggleMode() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+
+function drawPaletteTriangle(tab){
+  var width = 180;
+  var height = width;
+  var radius = 15;
+  var x_i_1 = width/2;
+  var y_i_1 = radius;
+  var x_i_2 = width-radius;
+  var y_i_2 = height-radius;
+  var x_i_3 = radius;
+  var y_i_3 = y_i_2;
+  var x_i_1_2 = width*3/4;
+  var y_i_1_2 = height/2;
+  var x_i_1_3 = width/4;
+  var y_i_1_3 = y_i_1_2;
+  var x_i_2_3 = x_i_1;
+  var y_i_2_3 = y_i_2;
+  var x_i_1_2_3 = x_i_1;
+  var y_i_1_2_3 = height/2+radius;
+
+  var target = tab + " #palette";
+  var svg = d3.select(target)
+              .append("svg")
+              // .attr("width", width)
+              // .attr("height", height)
+              .attr('viewBox', '0 0 230 230')
+              .attr('display', 'block')
+              .attr('class', 'palette')
+              .attr("transform", "rotate(45) translate(0,0)");
+
+  // Connecty lines
+  svg.append("line") //i1-i1_3
+     .attr("x1", x_i_1)
+     .attr("y1", y_i_1)
+     .attr("x2", x_i_1_3)
+     .attr("y2", y_i_1_3)
+     .attr("stroke", "LightGray")
+  svg.append("line")  //i1_3-i3
+     .attr("x1", x_i_1_3)
+     .attr("y1", y_i_1_3)
+     .attr("x2", x_i_3)
+     .attr("y2", y_i_3)
+     .attr("stroke", "LightGray")
+   svg.append("line")
+      .attr("x1", x_i_3)
+      .attr("y1", y_i_3)
+      .attr("x2", x_i_2_3)
+      .attr("y2", y_i_2_3)
+      .attr("stroke", "LightGray")
+   svg.append("line")
+      .attr("x1", x_i_2_3)
+      .attr("y1", y_i_2_3)
+      .attr("x2", x_i_2)
+      .attr("y2", y_i_2)
+      .attr("stroke", "LightGray")
+    svg.append("line")
+       .attr("x1", x_i_2)
+       .attr("y1", y_i_2)
+       .attr("x2", x_i_1_2)
+       .attr("y2", y_i_1_2)
+       .attr("stroke", "LightGray")
+    svg.append("line")
+       .attr("x1", x_i_1_2)
+       .attr("y1", y_i_1_2)
+       .attr("x2", x_i_1)
+       .attr("y2",  y_i_1)
+       .attr("stroke", "LightGray")
+     svg.append("line") //i1-all
+        .attr("x1", x_i_1)
+        .attr("y1", y_i_1)
+        .attr("x2", x_i_1_2_3)
+        .attr("y2", y_i_1_2_3)
+        .attr("stroke", "LightGray")
+      svg.append("line") //i3-all
+         .attr("x1", x_i_3)
+         .attr("y1", y_i_3)
+         .attr("x2", x_i_1_2_3)
+         .attr("y2", y_i_1_2_3)
+         .attr("stroke", "LightGray")
+     svg.append("line") //i2-all
+        .attr("x1", x_i_2)
+        .attr("y1", y_i_2)
+        .attr("x2", x_i_1_2_3)
+        .attr("y2", y_i_1_2_3)
+        .attr("stroke", "LightGray")
+
+  // Primary instances
+  svg.append("circle")
+     .attr("cx", x_i_1)
+     .attr("cy", y_i_1)
+     .attr("r", radius)
+     .attr("fill", "red")
+     .attr("class", "i_1")
+   svg.append("circle")
+      .attr("cx", x_i_3)
+      .attr("cy", y_i_3)
+      .attr("r", radius)
+      .attr("fill", "green")
+      .attr("class", "i_3")
+    svg.append("circle")
+       .attr("cx", x_i_2)
+       .attr("cy", y_i_2)
+       .attr("r", radius)
+       .attr("fill", "blue")
+       .attr("class", "i_2")
+   // Combined instances
+   svg.append("circle")
+      .attr("cx", x_i_1_3)
+      .attr("cy", y_i_1_3)
+      .attr("r", radius)
+      .attr("fill", "yellow")
+      .attr("class", "i_1_3")
+   svg.append("circle")
+      .attr("cx", x_i_1_2)
+      .attr("cy", y_i_1_2)
+      .attr("r", radius)
+      .attr("fill", "pink")
+      .attr("class", "i_1_2")
+   svg.append("circle")
+      .attr("cx", x_i_2_3)
+      .attr("cy", y_i_2_3)
+      .attr("r", radius)
+      .attr("fill", "cyan")
+      .attr("class", "i_2_3")
+   // all three instances
+   svg.append("circle")
+      .attr("cx", x_i_1_2_3)
+      .attr("cy", y_i_1_2_3)
+      .attr("r", radius)
+      .attr("fill", "black")
+      .attr("class", "i_1_2_3")
+
+    // LABELS
+    svg.append("text")
+      .attr("x", x_i_1+radius+8)
+      .attr("y", y_i_1)
+      .attr("fill", "Gray")
+      .attr("text-anchor", "middle")
+      .attr("alignment-baseline", "middle")
+      .attr("class", "heavy-ish")
+      .text("i1")
+    svg.append("text")
+       .attr("x", x_i_3)
+       .attr("y", y_i_3+radius+9)
+       .attr("r", radius)
+       .attr("fill", "Gray")
+       .attr("text-anchor", "middle")
+       .attr("alignment-baseline", "middle")
+       .attr("class", "heavy-ish")
+       .text("i3")
+     svg.append("text")
+        .attr("x", x_i_2)
+        .attr("y", y_i_2+radius+9)
+        .attr("r", radius)
+        .attr("fill", "Gray")
+        .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
+        .attr("class", "heavy-ish")
+        .text("i2")
+    // Combined instances
+    svg.append("text")
+       .attr("x", x_i_1_3)
+       .attr("y", y_i_1_3-radius-5)
+       .attr("r", radius)
+       .attr("fill", "Gray")
+       .attr("text-anchor", "middle")
+       .attr("alignment-baseline", "middle")
+       .attr("transform", "rotate(310, " + x_i_1_3 + ", " + y_i_1_3 + ")")
+       .attr("class", "heavy-ish")
+       .text("i3+i1")
+    svg.append("text")
+       .attr("x", x_i_1_2)
+       .attr("y", y_i_1_2-radius-5)
+       .attr("r", radius)
+       .attr("fill", "Gray")
+       .attr("text-anchor", "middle")
+       .attr("alignment-baseline", "middle")
+       .attr("transform", "rotate(50, " + x_i_1_2 + ", " + y_i_1_2 + ")")
+       .attr("class", "heavy-ish")
+       .text("i1+i2")
+    svg.append("text")
+       .attr("x", x_i_2_3)
+       .attr("y", y_i_2_3+radius+7)
+       .attr("r", radius)
+       .attr("fill", "Gray")
+       .attr("text-anchor", "middle")
+       .attr("alignment-baseline", "middle")
+       .attr("class", "heavy-ish")
+       .text("i3+i2")
+}
+drawPaletteTriangle(".tab1");
+drawPaletteTriangle(".tab2");
 
 
 /*** Initializing svgs on website ***/
@@ -74,7 +269,7 @@ function drawInstance(tab_num, instance_id) {
             .append("svg")
             .attr("width", width)
             .attr("height", height)
-            .attr('viewBox', '0 0 80 80')
+            // .attr('viewBox', '0 0 60 60')
             .attr('display', 'block');
   svg.append("circle")
     .attr("cx", cx)
@@ -111,6 +306,25 @@ function drawInstance(tab_num, instance_id) {
 function drawInitGrid(tab_num, area_id, grid_class) {
   /*Draws deactivated neuron grid in specified div*/
   var area_sel = tab_num + " " + area_id + grid_class;
+
+  var functional_area = document.querySelector(area_id + ">p").innerHTML;
+
+  // create a tooltip
+  // var Tooltip = d3.select(area_sel)
+  //   .append("div")
+  //   .style("opacity", 0)
+  //   .attr("class", "tooltip")
+  //   .style("background-color", "white")
+  //   .style("border", "solid")
+  //   .style("border-width", "2px")
+  //   .style("border-radius", "5px")
+  //   // .style("height", "0px")
+  //   .style("padding", "5px")
+  //   .style("position", "relative")
+  //   // .style("display", "inline-block")
+  //   .style("z", "900")
+  //   .style("text-align", "center");
+
   // Init svg
   var svg = d3.select(area_sel)
               .append("svg")
@@ -118,6 +332,31 @@ function drawInitGrid(tab_num, area_id, grid_class) {
               .attr("height", 160)
               .attr('viewBox', '0 0 160 160') // scale w CSS
               .attr('display', 'block');
+
+
+
+
+  // svg.on("mouseover", function(d) {
+  //     Tooltip
+  //       .style("opacity", 1)
+  //     // d3.select(this)
+  //     //   .style("opacity", 0.8)
+  //   })
+  //   .on("mousemove", function(d) {
+  //     // console.log(d3.pointer(event));
+  //     Tooltip
+  //       .html(functional_area)
+  //       .style("left", (d3.pointer(event)[0]) + "px")
+  //       .style("top", (d3.pointer(event)[1]) + "px")
+  //   })
+  //   .on("mouseleave", function(d) {
+  //       Tooltip
+  //         .style("opacity", 0)
+  //       d3.select(this)
+  //         .style("opacity", 1)
+  //     });
+
+
   // Draw background
   svg.append("rect")
       .attr("width", 160)
@@ -145,6 +384,9 @@ function drawInitGrid(tab_num, area_id, grid_class) {
          .attr("class", "cell nonCA")
     } // END j
   } // END i
+
+  svg.append("title") // TITLE APPENDED HERE
+  .html(functional_area);
 }
 
 function drawInitGrids(grids, areas) {
@@ -158,19 +400,21 @@ function drawInitGrids(grids, areas) {
       drawInitGrid(tab_num, area_id, grid_class);
       tab_num = ".tab2";
       drawInitGrid(tab_num, area_id, grid_class);
+      // Print content of area div - hoping to attach to svg in background!
+      // console.log(document.querySelector(area_id).textContent);
   } // END for area number
   } // END grid class
 }
 
 /*** Updating grids with active neuron IDs ***/
 
-function updateCA(area_id, CA) {
+function updateCA(area_id, CA, palette) {
   /*Updates drawing of active neurons in area_id.*/
   svg = d3.select(area_id).select('svg');
   // reset all active cells
   svg.selectAll("rect.cell.CA")
-    .attr("fill", color_palette.nonCA)
-    .attr("class", "cell nonCA");
+    // .attr("fill", color_palette.nonCA)
+    .attr("class", "cell nonCA " + palette);
   // and draw only the active ones
   for (const [instance, value] of Object.entries(CA)) {
     for (var i = 0; i < value.data.length; i++) {
@@ -178,8 +422,8 @@ function updateCA(area_id, CA) {
         var cellID = String(value.data[i]);
         // var col = String(value.color);
         svg.select("rect#cell" + cellID)
-          .attr("fill", value.color)
-          .attr("class", "cell CA " + value.origin)
+          // .attr("fill", value.color)
+          .attr("class", "cell CA " + value.origin + " " + palette)
       } // END if
     }// END for i, data
   } // END for object entries
@@ -264,6 +508,7 @@ function getUserValues(tab_num) {
     trainingtrials: document.querySelector(tab_num + ' #training_time_select').value,
     pattern: "P" + pattern_values[document.querySelector(tab_num + ' #pattern_select').value],
     model:"M" + model_values[document.querySelector(tab_num + ' #model_select').value],
+    palette: document.querySelector('#palette_select').value,
   };
 }
 
@@ -291,12 +536,13 @@ function changeTab(tab_num) {
                    && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
         // make results new CA - pass color map here?
-        updateCA(area_sel, new_CA);
+        updateCA(area_sel, new_CA, metadata.palette);
       } // END areas
     } // END grid_class
       document.querySelector(tab_num + ' #pattern_output').innerHTML = "C" + metadata.pattern.slice(1);
       document.querySelector(tab_num + ' #model_output').innerHTML = metadata.model;
     }) // END then
+    // palette_picker();
 };
 
 /*** DRAWING ***/

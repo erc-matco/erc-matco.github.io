@@ -1,6 +1,6 @@
 /*Colors*/
-$nonCA: #dddddd;
-$background: #bbbbbb;
+$nonCA: #bbbbbb;
+$background: #dddddd;
 $i_1_2_3: black;
 
 // $nonCA: LightGray;
@@ -40,35 +40,78 @@ $i_2_3: cyan;
 }
 
 .instance {
-  float: left;
+  // float: left;
   // border: 2px solid black;
-  margin-top: 7%;
-  padding-right: 5px;
-}
-
-.area-grid, .area-grid-1, .area-grid-2, .area-grid-3, .area-grid-4 {
-  width: 80%;
-  margin: auto;
-}
-
-.area-grid-1, .area-grid-2, .area-grid-3, .area-grid-4 {
-  margin-top: 15px;
+  // margin-top: 7%;
+  // padding-right: 5px;
+  // display: none;
 }
 
 .grid-wrapper {
-  // width: 50%;
-  // max-height: 150px;
-  // border: 2px solid blue;
-  // padding-left: 50%;
+  // width: 100%;
+	margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+	box-sizing: border-box;
+  grid-gap: 7px;
 }
 
-.heavy {font-size: 20pt; font-style: bold;}
-.heavy-ish {font-size: 15pt;font-style: bold;}
+#instance-1 {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+#instance-2 {
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+#instance-3 {
+  grid-column-start: 1;
+  grid-row-start: 3;
+}
+
+#overlay {
+  grid-column-start: 1;
+  grid-row-start: 4;
+}
+
+.instance {
+  display: flex;
+}
+
+.instance svg {
+  margin: auto auto;
+  // max-width: 50px;
+}
+
+.area-grid {
+  grid-row-start: 1;
+  grid-column-start: 2;
+}
+
+.area-grid-2 {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+.area-grid-3 {
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
+.area-grid-4 {
+  grid-row-start: 4;
+  grid-column-start: 2;
+}
 
 .row-1, .row-2 {
   display: inline-block;
-  width: 66.66%;
+  width: 75%;
 }
+
+.heavy {font-size: 20pt; font-style: bold;}
+.heavy-ish {font-size: 15pt; font-style: bold;}
 
 .functional-cortex {
   display: block;
@@ -93,7 +136,7 @@ $i_2_3: cyan;
 }
 
 .row-2 .area p {
-  display: block;
+  // display: block;
   position: absolute;
   height: 8px;
   text-align: center;
@@ -102,10 +145,25 @@ $i_2_3: cyan;
   display: none;
 }
 
+
 .area svg {
   width: 100%;
   height: auto;
 }
+
+.tab1 #palette, .tab2 #palette {
+  // width: 20px;
+  // border: 2px solid red;
+}
+
+
+
+
+// .tooltip {
+//   // position: relative;
+// }
+
+
 
 // Cell assembly colors
 .nonCA {fill: $nonCA;}
@@ -120,13 +178,81 @@ $i_2_3: cyan;
 
 .background.dark {fill: black;}
 .nonCA.dark {fill: Gray;}
-.i_1_2_3.dark {fill:white;}
+.i_1.dark {fill: $i_1;}
+.i_2.dark {fill: $i_2;}
+.i_3.dark {fill: $i_3;}
+.i_1_2.dark {fill: $i_1_2;}
+.i_1_3.dark {fill: $i_1_3;}
+.i_2_3.dark {fill: $i_2_3;}
+.i_1_2_3.dark {fill: white;}
+
+// Solarized
+$base03:    #002b36;
+$base02:    #073642;
+$base01:    #586e75;
+$base00:    #657b83;
+$base0:     #839496;
+$base1:     #93a1a1;
+$base2:     #eee8d5;
+$base3:     #fdf6e3;
+$yellow:    #b58900;
+$orange:    #cb4b16;
+$red:       #dc322f;
+$magenta:   #d33682;
+$violet:    #6c71c4;
+$blue:      #268bd2;
+$cyan:      #2aa198;
+$green:     #859900;
+
+// R Colorblind
+$blackr:      #000000;
+$oranger:    #E69F00;
+$bluer:      #56B4E9;
+$greenr:     #009E73;
+$yellowr:    #F0E442;
+$darkbluer:  #0072B2;
+$darkoranger: #D55E00;
+$pinkr:       #CC79A7;
+
+.background.solarized-dark {fill: $base1;}
+.nonCA.solarized-dark {fill: $base0;}
+.i_1.solarized-dark {fill: $red;}
+.i_2.solarized-dark {fill: $blue;}
+.i_3.solarized-dark {fill: LightGreen;}
+.i_1_2.solarized-dark {fill: $magenta;}
+.i_1_3.solarized-dark {fill: yellow;}
+.i_2_3.solarized-dark {fill: $cyan;}
+.i_1_2_3.solarized-dark {fill: $base3;}
+
+.background.solarized-light {fill: $base2;}
+.nonCA.solarized-light {fill: $base3;}
+.i_1.solarized-light {fill: $red;}
+.i_2.solarized-light {fill: $blue;}
+.i_3.solarized-light {fill: $green;}
+.i_1_2.solarized-light {fill: $magenta;}
+.i_1_3.solarized-light {fill: $yellow;}
+.i_2_3.solarized-light {fill: $cyan;}
+.i_1_2_3.solarized-light {fill: $base03;}
+
+.background.r-colorblind {fill: $background;}
+.nonCA.r-colorblind {fill: $nonCA;}
+.i_1.r-colorblind {fill: $darkoranger;}
+.i_2.r-colorblind {fill: $darkbluer;}
+.i_3.r-colorblind {fill: $greenr;}
+.i_1_2.r-colorblind {fill: $pinkr;}
+.i_1_3.r-colorblind {fill: $yellowr;}
+.i_2_3.r-colorblind {fill: $bluer;}
+.i_1_2_3.r-colorblind {fill: $blackr;}
 
 .hub-top {
   margin-top: 6px;
 }
 .hub-bottom {
   margin-top: -6px;
+}
+
+.dark-mode {
+  background-color: $base03;
 }
 
 // .tab1 {
