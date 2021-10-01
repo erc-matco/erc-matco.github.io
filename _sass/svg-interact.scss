@@ -29,10 +29,6 @@ $i_2_3: cyan;
   margin-top: 5px;
 }
 
-// $i_1_2: mix($i_1, $i_2);
-// $i_1_3: mix($i_1, $i_3);
-// $i_2_3: mix($i_2, $i_3);
-
 * {
   box-sizing: border-box;
 }
@@ -168,7 +164,7 @@ $i_2_3: cyan;
 .hline-top {
   // width: 80%;
   padding-top: 10px;
-  border-top: 2px solid #93a1a1; /* whichever color you prefer */
+  border-top: 2px solid #93a1a1;
 }
 
 
@@ -227,8 +223,6 @@ $pinkr:       #CC79A7;
 .i_1_3.dark {fill: $i_1_3;}
 .i_2_3.dark {fill: $i_2_3;}
 .i_1_2_3.dark {fill: white;}
-
-
 
 .background.solarized-dark {fill: $base1;}
 .nonCA.solarized-dark {fill: $base0;}

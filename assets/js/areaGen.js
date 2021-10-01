@@ -32,8 +32,8 @@ const color_palette = {
   i_1_2_3: "black",
 };
 
-function palette_picker() {
-  var palette = document.querySelector('#palette_select').value;
+function palette_picker(tab_num) {
+  var palette = document.querySelector(tab_num + ' #palette_select').value;
   d3.selectAll(".background")
     .attr("class", "background " + palette)
 
@@ -55,7 +55,21 @@ function palette_picker() {
   d3.selectAll(".i_1_2_3")
     .attr("class", "cell CA i_1_2_3 " + palette)
 }
-palette_picker();
+palette_picker('.tab1');
+palette_picker('.tab2');
+
+// Sync palette pickers
+var state1 = document.querySelector('.tab1 #palette_select');
+var state2 = document.querySelector('.tab2 #palette_select');
+
+state1.onchange = function(e) {
+    state2.value = e.target.value;
+    palette_picker('.tab1');
+};
+state2.onchange = function(e) {
+    state1.value = e.target.value;
+    palette_picker('.tab1');
+};
 
 function toggleMode() {
   var element = document.body;
@@ -508,7 +522,7 @@ function getUserValues(tab_num) {
     trainingtrials: document.querySelector(tab_num + ' #training_time_select').value,
     pattern: "P" + pattern_values[document.querySelector(tab_num + ' #pattern_select').value],
     model:"M" + model_values[document.querySelector(tab_num + ' #model_select').value],
-    palette: document.querySelector('#palette_select').value,
+    palette: document.querySelector(tab_num + ' #palette_select').value,
   };
 }
 

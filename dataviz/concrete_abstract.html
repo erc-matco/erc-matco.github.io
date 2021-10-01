@@ -45,7 +45,7 @@ layout: dataviz
           </div>
           <div class="choices">
             <label for="palette_select">Color Palette</label>
-            <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker()">
+            <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab1')">
               <option value="original">Original Paper</option>
               <option value="dark">Bright</option>
               <!-- <option value="solarized-dark">Solarized Dark</option>
@@ -204,6 +204,16 @@ layout: dataviz
           </select>
         </div> -->
         <div class="choices">
+        <label for="palette_select">Color Palette</label>
+        <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab2')">
+          <option value="original">Original Paper</option>
+          <option value="dark">Bright</option>
+          <!-- <option value="solarized-dark">Solarized Dark</option>
+          <option value="solarized-light">Solarized Light</option> -->
+          <option value="r-colorblind">R Colorblind</option>
+        </select>
+        </div>
+        <div class="choices">
           <div id="palette"></div>
           <!-- <img src="/assets/img/instance_triangle.png" /> -->
         </div>
@@ -294,9 +304,9 @@ layout: dataviz
       </div>
     </div>
 
-    <div class="instance" id="overlay"></div>
+    <div class="instance hline-top" id="overlay"></div>
     <div class="area-grid-4">
-      <div class="row-1">
+      <div class="row-1 hline-top">
         <div class="functional-cortex" id="visual">
           <div class="area overlay" id="area1"><p>V1</p></div>
           <div class="area overlay" id="area2"><p>TO</p></div>
