@@ -339,6 +339,11 @@ function drawInitGrid(tab_num, area_id, grid_class) {
   //   .style("z", "900")
   //   .style("text-align", "center");
 
+
+  let margin_left = 5;
+  let margin_top = 5;
+  let width = 5;
+  let height = width;
   // Init svg
   var svg = d3.select(area_sel)
               .append("svg")
@@ -346,10 +351,6 @@ function drawInitGrid(tab_num, area_id, grid_class) {
               .attr("height", 160)
               .attr('viewBox', '0 0 160 160') // scale w CSS
               .attr('display', 'block');
-
-
-
-
   // svg.on("mouseover", function(d) {
   //     Tooltip
   //       .style("opacity", 1)
@@ -378,11 +379,6 @@ function drawInitGrid(tab_num, area_id, grid_class) {
       .attr("fill", color_palette.background)
       .attr("class", "background");
   // Draw cells
-  let margin_left = 5;
-  let margin_top = 5;
-  let width = 5;
-  let height = width;
-
   for (var i = 0; i < 25; i++) {
     for (var j = 0; j < 25; j++) {
       newX = margin_left + (width*j + 1*j);

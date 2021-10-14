@@ -58,6 +58,7 @@ $i_2_3: cyan;
   grid-template-columns: 1fr 10fr;
 	box-sizing: border-box;
   grid-gap: 7px;
+  // height: 50vh;
 }
 
 #instance-1 {
@@ -115,9 +116,6 @@ $i_2_3: cyan;
   width: 80%;
 }
 
-.heavy {font-size: 20pt; font-style: bold;}
-.heavy-ish {font-size: 15pt; font-style: bold;}
-
 .functional-cortex {
   display: block;
   float: left;
@@ -129,8 +127,27 @@ $i_2_3: cyan;
   display: inline-block;
   float: left;
   width: 33.33%;
+  // width: 160px;
   height: auto;
+  // border: 5px solid red;
+  // padding-left: 50px;
 }
+
+.area:last-child {
+  // padding-left: 50px;
+  // margin-left: 5px;
+}
+
+.area svg {
+  width: 100%;
+  // width: 160px;
+  height: auto;
+  // height: 12vh;
+  // width: auto;
+}
+
+.heavy {font-size: 20pt; font-style: bold;}
+.heavy-ish {font-size: 15pt; font-style: bold;}
 
 .row-1 .area p {
   // display: block;
@@ -150,15 +167,10 @@ $i_2_3: cyan;
   display: none;
 }
 
-
-.area svg {
-  width: 100%;
-  height: auto;
-}
-
 .tab1 #palette, .tab2 #palette {
-  // width: 20px;
+  width: 80%;
   // border: 2px solid red;
+  margin: auto;
 }
 
 .hline-top {
@@ -166,13 +178,6 @@ $i_2_3: cyan;
   padding-top: 10px;
   border-top: 2px solid #93a1a1;
 }
-
-
-
-
-// .tooltip {
-//   // position: relative;
-// }
 
 // Solarized
 $base03:    #002b36;
