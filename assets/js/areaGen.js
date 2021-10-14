@@ -273,7 +273,7 @@ drawPaletteTriangle(".tab2");
 function drawInstance(tab_num, instance_id) {
   /*Draws instance identifier circle*/
   var tab_sel = tab_num + " " + instance_id;
-  var width = 60;
+  var width = 50;
   var height = width;
   var cx = width/2;
   var cy = height/2;

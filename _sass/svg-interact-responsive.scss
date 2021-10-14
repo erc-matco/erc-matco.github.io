@@ -22,8 +22,7 @@ $i_2_3: cyan;
   color: white;
 }
 .wide {
-  width: 900px;
-  margin: auto;
+  width: 85%;
 }
 
 .palette_select {
@@ -36,10 +35,8 @@ $i_2_3: cyan;
 
 .menu-center {
   display: block;
-  width: 150px !important;
+  width: 20% !important;
   float: right;
-  position: sticky;
-  top: 0px;
 }
 
 .choices {
@@ -58,8 +55,7 @@ $i_2_3: cyan;
   // width: 100%;
 	margin: auto;
   display: grid;
-  // grid-template-columns: 1fr 10fr;
-  grid-template-columns: 50px 600px;
+  grid-template-columns: 1fr 10fr;
 	box-sizing: border-box;
   grid-gap: 7px;
   // height: 50vh;
@@ -117,13 +113,13 @@ $i_2_3: cyan;
 
 .row-1, .row-2 {
   display: inline-block;
-  width: 600px;
+  width: 80%;
 }
 
 .functional-cortex {
   display: block;
   float: left;
-  width: 300px;
+  width: 50%;
   height: auto;
 }
 
@@ -131,7 +127,7 @@ $i_2_3: cyan;
   display: inline-block;
   float: left;
   // width: 33.33%;
-  width: 100px;
+  width: 80px;
   height: auto;
   // border: 5px solid red;
   // padding-left: 50px;
@@ -144,7 +140,7 @@ $i_2_3: cyan;
 
 .area svg {
   // width: 100%;
-  width: 100px;
+  width: 80px;
   height: auto;
   // height: 12vh;
   // width: auto;
