@@ -20,6 +20,8 @@ Kaiserswerther Straße 16-18<br />
 ### Turnover Tax ID
 DE 811304768
 
+Please note the [data protection policy](https://www.fu-berlin.de/en/redaktion/impressum/datenschutzhinweise/index.html) of Freie Universität Berlin.
+
 ### Hosting
 Our host collects the following data in so-called log files, which your browser transmits:
 
