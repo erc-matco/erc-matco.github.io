@@ -174,9 +174,11 @@ strong {
 
 .logo {
   display: block;
-  width: 225px;
+  width: 30%;
   height: auto;
   float: left;
+  margin: 2px;
+  min-width: 225px;
 }
 
 
@@ -226,6 +228,13 @@ hr {
 
   footer {
     width: 100%;
+  }
+
+  .logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 225px;
   }
 }
 
