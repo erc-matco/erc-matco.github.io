@@ -17,4 +17,8 @@ The European Research Council (ERC) is one of the most prestigious European fund
 
 **Planned duration:** 2020-2025
 
-**Funded by:** European Research Council
+**Funded by:** This project has received funding from the European Research Council (ERC) under the European Union’s Horizon 2020 research and innovation programme (grant agreement No 883811).
+
+![logo-erc](/assets/img/logos/LOGO_ERC.png){:class="logo"}
+![logo-EU](/assets/img/logos/EU_flag.jpg){:class="logo"}
+![logo-fu](/assets/img/logos/fu_logo_weg.png){:class="logo"}
