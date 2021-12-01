@@ -21,4 +21,4 @@ The European Research Council (ERC) is one of the most prestigious European fund
 
 ![logo-erc](/assets/img/logos/LOGO_ERC.png){:class="logo"}
 ![logo-EU](/assets/img/logos/EU_flag.jpg){:class="logo"}
-![logo-fu](/assets/img/logos/fu_logo_weg.png){:class="logo"}
+![logo-fu](/assets/img/logos/fu_logo_web.png){:class="logo"}
