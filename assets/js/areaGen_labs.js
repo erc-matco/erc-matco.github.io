@@ -528,7 +528,7 @@ function changeTab(tab_num) {
   // palette_picker();
   // Fetch all current settings
   var metadata = getUserValues(tab_num);
-  var type = (tab_num === ".tab1") ? "con50sc" : "pair33sc";
+  var type = (tab_num === ".tab1") ? "con50" : "pair33";
 
   // get new_CAs for each area
   d3.tsv("/assets/CAbyinstance_data_2ktt4ktt_labs.txt").then( function(data) {
@@ -542,10 +542,10 @@ function changeTab(tab_num) {
         var data_subset = data.filter(function(d) {
           return (d.AreaAbs == areas[area_num]
                    && d.Model == metadata.model
-                   && d.Type == type
+                   && d.SemType == type
+				   && d.LabelType == metadata.label
                    && d.TrainingTrials == metadata.trainingtrials
-                   && d.Pattern3i == metadata.pattern
-                   && d.Label == metadata.label)});
+                   && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
         // make results new CA - pass color map here?
         updateCA(area_sel, new_CA, metadata.palette);
