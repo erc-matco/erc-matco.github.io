@@ -1,4 +1,4 @@
-Model	Type	Label	TrainingTrials	AreaAbs	Pattern3i	CAi_1	CAi_2	CAi_3	CAi_1_2	CAi_1_3	CAi_2_3	CAi_1_2_3	WFctrlCA
+Model	SemType	LabelType	TrainingTrials	AreaAbs	Pattern3i	CAi_1	CAi_2	CAi_3	CAi_1_2	CAi_1_3	CAi_2_3	CAi_1_2_3	WFctrlCA
 M01	con50	no-label	4000tt	1	P01	#131#180#183#427#436#463#	#216#220#363#490#500#574#	#123#341#343#384#446#494#	#	#	#	#73#75#199#237#239#529#	n/a
 M01	con50	no-label	4000tt	2	P01	#260#385#	#81#424#550#552#	#245#341#435#438#	#	#23#25#216#601#	#	#3#28#124#193#248#292#	n/a
 M01	con50	no-label	4000tt	3	P01	#255#337#358#	#63#99#570#	#295#344#	#	#551#	#	#46#49#125#216#225#237#569#577#601#	n/a
