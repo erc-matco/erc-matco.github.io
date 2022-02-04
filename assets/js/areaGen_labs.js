@@ -543,7 +543,7 @@ function changeTab(tab_num) {
           return (d.AreaAbs == areas[area_num]
                    && d.Model == metadata.model
                    && d.SemType == type
-				   && d.LabelType == metadata.label
+                   && d.LabelType == metadata.label
                    && d.TrainingTrials == metadata.trainingtrials
                    && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
