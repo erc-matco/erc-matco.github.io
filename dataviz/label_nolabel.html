@@ -42,6 +42,10 @@ layout: dataviz
             </select>
           </div>
           <div class="choices">
+            <label for="show_control">Show wordform control?</label>
+            <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab1')"/>
+          </div>
+          <div class="choices">
             <label for="training_time_select">Training Time</label>
             <select name="training_time_select" class="training_time_select" id="training_time_select" oninput="changeTab('.tab1')">
               <option value="4000tt">4000tt</option>
@@ -197,6 +201,10 @@ layout: dataviz
             <option value="no-label">No Label</option>
             <option value="label">Label</option>
           </select>
+        </div>
+        <div class="choices">
+          <label for="show_control">Show wordform control?</label>
+          <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab2')"/>
         </div>
         <div class="choices">
           <label for="training_time_select">Training Time</label>

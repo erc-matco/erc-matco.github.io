@@ -30,6 +30,7 @@ const color_palette = {
   i_1_3: "#e6e203",
   i_2_3: "#4cf6fa",
   i_1_2_3: "black",
+  WFctrlCA: "#BF40BF",
 };
 
 function palette_picker(tab_num) {
@@ -418,7 +419,7 @@ function drawInitGrids(grids, areas) {
 
 /*** Updating grids with active neuron IDs ***/
 
-function updateCA(area_id, CA, palette) {
+function updateCA(area_id, CA, palette, show_wfctrl) {
   /*Updates drawing of active neurons in area_id.*/
   svg = d3.select(area_id).select('svg');
   // reset all active cells
@@ -430,6 +431,13 @@ function updateCA(area_id, CA, palette) {
     for (var i = 0; i < value.data.length; i++) {
       if (value.data[i]) {
         var cellID = String(value.data[i]);
+        if (!(show_wfctrl) && instance == "WFctrlCA") {
+          continue;
+        }
+        // catch cases with no WordForm Control:
+        if(cellID == "n/a") {
+          continue;
+        }
         // var col = String(value.color);
         svg.select("rect#cell" + cellID)
           // .attr("fill", value.color)
@@ -458,6 +466,7 @@ function grid2column(data_subset, grid_class) {
   var i_1_3 = data_subset[0].CAi_1_3.split('#');
   var i_2_3 = data_subset[0].CAi_2_3.split('#');
   var i_1_2_3 = data_subset[0].CAi_1_2_3.split('#');
+  var wfctrlCA = data_subset[0].WFctrlCA.split('#');
 
   switch (grid_class) {
     case ".grid-1": {
@@ -469,6 +478,7 @@ function grid2column(data_subset, grid_class) {
         i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
         i_2_3: {data: [], color: color_palette.i_2_3, origin: "i_2_3"},
         i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
       };
       return CA;}
     case ".grid-2": {
@@ -480,6 +490,7 @@ function grid2column(data_subset, grid_class) {
         i_1_3: {data: [], color: color_palette.i_1_3, origin: "i_1_3"},
         i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
         i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
       };
       return CA;}
     case ".grid-3": {
@@ -491,6 +502,7 @@ function grid2column(data_subset, grid_class) {
         i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
         i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
         i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
       };
       return CA;}
     case ".overlay": {
@@ -502,6 +514,7 @@ function grid2column(data_subset, grid_class) {
         i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
         i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
         i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
       };
       return CA;}
     default:
@@ -513,12 +526,15 @@ function grid2column(data_subset, grid_class) {
 function getUserValues(tab_num) {
   /*Gets current arrangement of user selected values.*/
   //NOTE: type_select is deprecated with the tab design
+  // console.log(document.querySelector(tab_num + ' #show_control').checked);
+  // Mysteriously, selecting #show_control yields null on initial load
   return {
     // trainingtrials: document.getElementById('training_time_select').value,
     trainingtrials: document.querySelector(tab_num + ' #training_time_select').value,
     pattern: "P" + pattern_values[document.querySelector(tab_num + ' #pattern_select').value],
     model:"M" + model_values[document.querySelector(tab_num + ' #model_select').value],
     label: document.querySelector(tab_num + ' #label_select').value,
+    wf_control: document.querySelector(tab_num + ' #show_control').checked,
     palette: document.querySelector(tab_num + ' #palette_select').value,
   };
 }
@@ -548,7 +564,7 @@ function changeTab(tab_num) {
                    && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
         // make results new CA - pass color map here?
-        updateCA(area_sel, new_CA, metadata.palette);
+        updateCA(area_sel, new_CA, metadata.palette, metadata.wf_control);
       } // END areas
     } // END grid_class
       document.querySelector(tab_num + ' #pattern_output').innerHTML = "C" + metadata.pattern.slice(1);
