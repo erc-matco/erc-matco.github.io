@@ -13,6 +13,29 @@ layout: dataviz
 </head>
 
 <body>
+  <div class="two-col">
+    <div class="left"><p>This interactive figure shows cell assemblies of a brain-constrained
+deep neural network which learned to associate conceptual patterns
+representing concrete or abstract concepts with labels (word form
+patterns). The top 3 rows show instance-CAs, whereas the bottom
+row shows an overlay of the entire concept-CA. In each row, the 12
+areas are arranged in the same way as in Fig 2A/B of the paper [link
+zu Psych res] (i.e., extra-sylvian areas on top, peri-sylvian areas on
+the bottom).</p>
+    <p>You can view the cell assemblies of the model that was
+    trained with conceptual patterns only ("No Label", [link zu Psych
+    res]) or of the model that learnt concept-to-label associations
+    ("Label", Henningsen-Schomers et al., 2022, under review, OSF link:
+    <a href="https://osf.io/eqxh3/" target="_blank">https://osf.io/eqxh3/</a>). This allows you to get a visual impression of
+    how the emerging cell assemblies change as a consequence of adding a
+    label during training.</p>
+
+    <div class="right">
+      <img alt="Figure showing the connectivity between the twelve model areas." src="../assets/Fig2B_area-structure.png"/>
+      <p class="caption">Adapted from Henningsen-Schomers & Pulvermüller (2021) Modelling concrete and abstract concepts using brain-constrained
+    deep neural networks, https://doi.org/10.1007/s00426-021-01591-6, published under a <a href="http://creativecommons.org/licenses/by/4.0/ " target="_blank">CC-BY-4.0 license</a>.</p>
+    </div>
+  </div>
   <!--Begin Result Tabs-->
   <div class="tabbed">
     <input checked="checked" id="tab1" type="radio" name=tabs/>
