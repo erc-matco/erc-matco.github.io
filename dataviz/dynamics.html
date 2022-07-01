@@ -1,0 +1,390 @@
+---
+title: CA Dynamics
+layout: dataviz
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <div class="two-col">
+    <div class="left"><p>This interactive figure shows cell assemblies of a brain-constrained
+deep neural network which learned to associate conceptual patterns
+representing concrete or abstract concepts with labels (word form
+patterns). The top 3 rows show instance-CAs, whereas the bottom
+row shows an overlay of the entire concept-CA. In each row, the 12
+areas are arranged in the same way as in Fig 2A/B of the paper <a href="https://dx.doi.org/10.1007/s00426-021-01591-6" target="_blank">Henningsen-Schomers et al. (2021)</a> (i.e., extra-sylvian areas on top, peri-sylvian areas on
+the bottom).</p>
+    <p>You can view the cell assemblies of the model that was
+    trained with conceptual patterns only ("No Label", <a href="https://dx.doi.org/10.1007/s00426-021-01591-6" target="_blank">Henningsen-Schomers et al., 2021, <i>Psychological Research</i></a>) or of the model that learnt concept-to-label associations
+    ("Label", Henningsen-Schomers et al., 2022, under review, OSF link:
+    <a href="https://osf.io/eqxh3/" target="_blank">https://osf.io/eqxh3/</a>). Finally, you can watch full simulations of model activity, starting with stimulation of the primary visual and primary motor cortex.</p>
+    </div>
+
+    <div class="right">
+      <img alt="Figure showing the connectivity between the twelve model areas." src="../assets/Fig2B_area-structure.png"/>
+      <p class="caption">Adapted from Henningsen-Schomers & Pulvermüller (2021) Modelling concrete and abstract concepts using brain-constrained
+    deep neural networks, https://doi.org/10.1007/s00426-021-01591-6, published under a <a href="http://creativecommons.org/licenses/by/4.0/ " target="_blank">CC-BY-4.0 license</a>.</p>
+    </div>
+  </div>
+  <!--Begin Result Tabs-->
+  <div class="tabbed">
+    <input checked="checked" id="tab1" type="radio" name=tabs/>
+    <input id="tab2" type="radio" name=tabs/>
+    <nav>
+      <label for="tab1">Concrete</label>
+      <label for="tab2">Abstract</label>
+    </nav>
+    <figure>
+      <div class="tab1">
+        <div class="menu-center">
+          <div class="choices">
+            <label for="pattern_select"><b>Concept</b></label>
+            <div id="pattern_output"></div>
+            <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1" oninput="changeTab('.tab1')">
+          </div>
+          <div class="choices">
+            <label for="model_select"><b>Model</b></label>
+            <div id="model_output"></div>
+            <input id="model_select" class="slider" type="range" min="0", value="0" max="11" step="1" oninput="changeTab('.tab1')">
+          </div>
+          <div class="choices">
+            <label for="ts_select"><b>Timestep</b></label>
+            <div id="ts_output"></div>
+            <input id="ts_select" class="slider" type="range" min="1", value="1" max="30" step="1" oninput="changeTab('.tab1')">
+          </div>
+          <div class="choices">
+            <label for="label_select">Labelled Concepts</label>
+            <select name="label_select" class="label_select" id="label_select" oninput="changeTab('.tab1')">
+              <option value="no-label">No Label</option>
+              <option value="label">Label</option>
+            </select>
+          </div>
+          <div class="choices">
+            <label for="show_control">Show wordform control?</label>
+            <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab1')"/>
+          </div>
+          <!-- <div class="choices">
+            <label for="training_time_select">Training Time</label>
+            <select name="training_time_select" class="training_time_select" id="training_time_select" oninput="changeTab('.tab1')">
+              <option value="4000tt">4000tt</option>
+              <option value="2000tt">2000tt</option>
+            </select>
+          </div> -->
+          <div class="choices">
+            <label for="palette_select">Color Palette</label>
+            <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab1')">
+              <option value="original">Original Paper</option>
+              <option value="dark">Bright</option>
+              <!-- <option value="solarized-dark">Solarized Dark</option>
+              <option value="solarized-light">Solarized Light</option> -->
+              <option value="r-colorblind">R Colorblind</option>
+            </select>
+          </div>
+          <div class="choices">
+            <div id="palette"></div>
+            <!-- <img src="/assets/img/instance_triangle.png" /> -->
+          </div>
+        </div>
+
+      <div class="grid-wrapper">
+        <!-- <div class="instance" id="instance-1"></div>
+        <div class="area-grid">
+        <div class="row-1">
+          <div class="functional-cortex" id="visual">
+            <div class="area grid-1" id="area1"><p>V1</p></div>
+            <div class="area grid-1" id="area2"><p>TO</p></div>
+            <div class="area grid-1 hub-top" id="area3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area grid-1 hub-top" id="area4"><p>PF_L</p></div>
+            <div class="area grid-1" id="area5"><p>PM_L</p></div>
+            <div class="area grid-1" id="area6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area grid-1" id="area7"><p>A1</p></div>
+            <div class="area grid-1" id="area8"><p>AB</p></div>
+            <div class="area grid-1 hub-bottom" id="area9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area grid-1 hub-bottom" id="area10"><p>PF_i</p></div>
+            <div class="area grid-1" id="area11"><p>PM_i</p></div>
+            <div class="area grid-1" id="area12"><p>M1_i</p></div>
+          </div>
+        </div>
+        </div>
+      <div class="instance" id="instance-2"></div>
+      <div class="area-grid-2">
+        <div class="row-1">
+          <div class="functional-cortex" id="visual">
+            <div class="area grid-2" id="area1"><p>V1</p></div>
+            <div class="area grid-2" id="area2"><p>TO</p></div>
+            <div class="area grid-2 hub-top" id="area3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area grid-2 hub-top" id="area4"><p>PF_L</p></div>
+            <div class="area grid-2" id="area5"><p>PM_L</p></div>
+            <div class="area grid-2" id="area6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area grid-2" id="area7"><p>A1</p></div>
+            <div class="area grid-2" id="area8"><p>AB</p></div>
+            <div class="area grid-2 hub-bottom" id="area9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area grid-2 hub-bottom" id="area10"><p>PF_i</p></div>
+            <div class="area grid-2" id="area11"><p>PM_i</p></div>
+            <div class="area grid-2" id="area12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-3"></div>
+      <div class="area-grid-3">
+        <div class="row-1">
+          <div class="functional-cortex" id="visual">
+            <div class="area grid-3" id="area1"><p>V1</p></div>
+            <div class="area grid-3" id="area2"><p>TO</p></div>
+            <div class="area grid-3 hub-top" id="area3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area grid-3 hub-top" id="area4"><p>PF_L</p></div>
+            <div class="area grid-3" id="area5"><p>PM_L</p></div>
+            <div class="area grid-3" id="area6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area grid-3" id="area7"><p>A1</p></div>
+            <div class="area grid-3" id="area8"><p>AB</p></div>
+            <div class="area grid-3 hub-bottom" id="area9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area grid-3 hub-bottom" id="area10"><p>PF_i</p></div>
+            <div class="area grid-3" id="area11"><p>PM_i</p></div>
+            <div class="area grid-3" id="area12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="instance hline-top" id="overlay"></div>
+      <div class="area-grid-4">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1"><p>V1</p></div>
+            <div class="area overlay" id="area2"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4"><p>PF_L</p></div>
+            <div class="area overlay" id="area5"><p>PM_L</p></div>
+            <div class="area overlay" id="area6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7"><p>A1</p></div>
+            <div class="area overlay" id="area8"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10"><p>PF_i</p></div>
+            <div class="area overlay" id="area11"><p>PM_i</p></div>
+            <div class="area overlay" id="area12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      </div> <!--End grid-wrapper -->
+    </div> <!--End tab1 -->
+    <div class="tab2">
+      <div class="menu-center">
+        <div class="choices">
+          <label for="pattern_select"><b>Concept</b></label>
+          <div id="pattern_output"></div>
+          <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1" oninput="changeTab('.tab2')">
+        </div>
+        <div class="choices">
+          <label for="model_select"><b>Model</b></label>
+          <div id="model_output"></div>
+          <input id="model_select" class="slider" type="range" min="0", value="0" max="11" step="1" oninput="changeTab('.tab2')">
+        </div>
+        <div class="choices">
+          <label for="ts_select"><b>Timestep</b></label>
+          <div id="ts_output"></div>
+          <input id="ts_select" class="slider" type="range" min="1", value="1" max="30" step="1" oninput="changeTab('.tab2')">
+        </div>
+        <div class="choices">
+          <label for="label_select">Labelled Concepts</label>
+          <select name="label_select" class="label_select" id="label_select" oninput="changeTab('.tab2')">
+            <option value="no-label">No Label</option>
+            <option value="label">Label</option>
+          </select>
+        </div>
+        <div class="choices">
+          <label for="show_control">Show wordform control?</label>
+          <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab2')"/>
+        </div>
+        <!-- <div class="choices">
+          <label for="training_time_select">Training Time</label>
+          <select name="training_time_select" class="training_time_select" id="training_time_select" oninput="changeTab('.tab2')">
+            <option value="4000tt">4000tt</option>
+            <option value="2000tt">2000tt</option>
+          </select>
+        </div> -->
+        <!-- <div class="choices">
+          <label for="palette_select">Color Palette</label>
+          <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker()">
+            <option value="original">Original Paper</option>
+            <option value="dark">Dark</option>
+            <option value="solarized-dark">Solarized Dark</option>
+            <option value="solarized-light">Solarized Light</option>
+            <option value="r-colorblind">R Colorblind</option>
+          </select>
+        </div> -->
+        <div class="choices">
+        <label for="palette_select">Color Palette</label>
+        <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab2')">
+          <option value="original">Original Paper</option>
+          <option value="dark">Bright</option>
+          <!-- <option value="solarized-dark">Solarized Dark</option>
+          <option value="solarized-light">Solarized Light</option> -->
+          <option value="r-colorblind">R Colorblind</option>
+        </select>
+        </div>
+        <div class="choices">
+          <div id="palette"></div>
+          <!-- <img src="/assets/img/instance_triangle.png" /> -->
+        </div>
+      </div>
+
+    <div class="grid-wrapper">
+      <div class="instance" id="instance-1"></div>
+      <div class="area-grid">
+        <div class="row-1">
+          <div class="functional-cortex" id="visual">
+            <div class="area grid-1" id="area1"><p>V1</p></div>
+            <div class="area grid-1" id="area2"><p>TO</p></div>
+            <div class="area grid-1 hub-top" id="area3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area grid-1 hub-top" id="area4"><p>PF_L</p></div>
+            <div class="area grid-1" id="area5"><p>PM_L</p></div>
+            <div class="area grid-1" id="area6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area grid-1" id="area7"><p>A1</p></div>
+            <div class="area grid-1" id="area8"><p>AB</p></div>
+            <div class="area grid-1 hub-bottom" id="area9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area grid-1 hub-bottom" id="area10"><p>PF_i</p></div>
+            <div class="area grid-1" id="area11"><p>PM_i</p></div>
+            <div class="area grid-1" id="area12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+    <div class="instance" id="instance-2"></div>
+    <div class="area-grid-2">
+      <div class="row-1">
+        <div class="functional-cortex" id="visual">
+          <div class="area grid-2" id="area1"><p>V1</p></div>
+          <div class="area grid-2" id="area2"><p>TO</p></div>
+          <div class="area grid-2 hub-top" id="area3"><p>AT</p></div>
+        </div>
+        <div class="functional-cortex" id="motor">
+          <div class="area grid-2 hub-top" id="area4"><p>PF_L</p></div>
+          <div class="area grid-2" id="area5"><p>PM_L</p></div>
+          <div class="area grid-2" id="area6"><p>M1_L</p></div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="functional-cortex" id="auditory">
+          <div class="area grid-2" id="area7"><p>A1</p></div>
+          <div class="area grid-2" id="area8"><p>AB</p></div>
+          <div class="area grid-2 hub-bottom" id="area9"><p>PB</p></div>
+        </div>
+        <div class="functional-cortex" id="articulatory">
+          <div class="area grid-2 hub-bottom" id="area10"><p>PF_i</p></div>
+          <div class="area grid-2" id="area11"><p>PM_i</p></div>
+          <div class="area grid-2" id="area12"><p>M1_i</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="instance" id="instance-3"></div>
+    <div class="area-grid-3">
+      <div class="row-1">
+        <div class="functional-cortex" id="visual">
+          <div class="area grid-3" id="area1"><p>V1</p></div>
+          <div class="area grid-3" id="area2"><p>TO</p></div>
+          <div class="area grid-3 hub-top" id="area3"><p>AT</p></div>
+        </div>
+        <div class="functional-cortex" id="motor">
+          <div class="area grid-3 hub-top" id="area4"><p>PF_L</p></div>
+          <div class="area grid-3" id="area5"><p>PM_L</p></div>
+          <div class="area grid-3" id="area6"><p>M1_L</p></div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="functional-cortex" id="auditory">
+          <div class="area grid-3" id="area7"><p>A1</p></div>
+          <div class="area grid-3" id="area8"><p>AB</p></div>
+          <div class="area grid-3 hub-bottom" id="area9"><p>PB</p></div>
+        </div>
+        <div class="functional-cortex" id="articulatory">
+          <div class="area grid-3 hub-bottom" id="area10"><p>PF_i</p></div>
+          <div class="area grid-3" id="area11"><p>PM_i</p></div>
+          <div class="area grid-3" id="area12"><p>M1_i</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="instance hline-top" id="overlay"></div>
+    <div class="area-grid-4">
+      <div class="row-1 hline-top">
+        <div class="functional-cortex" id="visual">
+          <div class="area overlay" id="area1"><p>V1</p></div>
+          <div class="area overlay" id="area2"><p>TO</p></div>
+          <div class="area overlay hub-top" id="area3"><p>AT</p></div>
+        </div>
+        <div class="functional-cortex" id="motor">
+          <div class="area overlay hub-top" id="area4"><p>PF_L</p></div>
+          <div class="area overlay" id="area5"><p>PM_L</p></div>
+          <div class="area overlay" id="area6"><p>M1_L</p></div>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="functional-cortex" id="auditory">
+          <div class="area overlay" id="area7"><p>A1</p></div>
+          <div class="area overlay" id="area8"><p>AB</p></div>
+          <div class="area overlay hub-bottom" id="area9"><p>PB</p></div>
+        </div>
+        <div class="functional-cortex" id="articulatory">
+          <div class="area overlay hub-bottom" id="area10"><p>PF_i</p></div>
+          <div class="area overlay" id="area11"><p>PM_i</p></div>
+          <div class="area overlay" id="area12"><p>M1_i</p></div>
+        </div>
+      </div>
+    </div>
+    </div> <!--End grid-wrapper -->
+    </div> <!--End tab2 -->
+  </figure>
+
+
+  <script type="text/javascript" src="../assets/js/areaGen_dynamics.js"></script>
+</body>
+</html>
