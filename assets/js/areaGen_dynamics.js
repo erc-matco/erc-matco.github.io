@@ -508,9 +508,11 @@ function changeTab(tab_num) {
   // Fetch all current settings
   var metadata = getUserValues(tab_num);
   var type = (tab_num === ".tab1") ? "con50" : "pair33";
-
+  var filename = "/assets/extraonly_" + metadata.model + "_" +
+metadata.pattern + ".tsv";
   // get new_CAs for each area
-  d3.tsv("/assets/sensonly_full.txt").then( function(data) {
+  // d3.tsv("/assets/sensonly_full.txt").then( function(data) {
+  d3.tsv(filename).then( function(data) {
     for (var grid_idx = 0; grid_idx < grids.length; grid_idx++) {
       var grid_class = grids[grid_idx];
       for (var area_num = 0; area_num < areas.length; area_num++) {
@@ -520,12 +522,12 @@ function changeTab(tab_num) {
         // filter data by condition
         var data_subset = data.filter(function(d) {
           return (d.AreaAbs == areas[area_num]
-                   && d.Model == metadata.model
+                   // && d.Model == metadata.model
                    && d.SemType == type
                    && d.LabelType == metadata.label
-                   && d.TimeStep == metadata.ts
-                   && d.TrainingTrials == metadata.trainingtrials
-                   && d.Pattern3i == metadata.pattern)});
+                   && d.TimeStep == metadata.ts)});
+                   //&& d.TrainingTrials == metadata.trainingtrials
+                   // && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
         // make results new CA - pass color map here?
         updateCA(area_sel, new_CA, metadata.palette, metadata.wf_control);
