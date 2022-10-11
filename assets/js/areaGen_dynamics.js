@@ -16,8 +16,8 @@ if (!Object.entries) {
 let areas = [1,2,3,4,5,6,7,8,9,10,11,12];
 let pattern_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"];
 let model_values = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-//let grids = [".grid-1", ".grid-2", ".grid-3", ".overlay"];
-let grids = [".overlay"];
+let grids = [".grid-1", ".grid-2", ".grid-3", ".overlay"];
+//let grids = [".overlay"];
 
 const color_palette = {
   background: "LightGray",
@@ -430,42 +430,42 @@ function grid2column(data_subset, grid_class) {
   var wfctrlCA = data_subset[0].WFctrlCA.split('#');
 
   switch (grid_class) {
-    // case ".grid-1": {
-    //   const CA = {
-    //     i_1: {data: i_1, color: color_palette.i_1, origin: "i_1"},
-    //     i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
-    //     i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
-    //     i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
-    //     i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
-    //     i_2_3: {data: [], color: color_palette.i_2_3, origin: "i_2_3"},
-    //     i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
-    //     WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
-    //   };
-    //   return CA;}
-    // case ".grid-2": {
-    //   const CA = {
-    //     i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
-    //     i_2: {data: i_2, color: color_palette.i_2, origin: "i_2"},
-    //     i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
-    //     i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
-    //     i_1_3: {data: [], color: color_palette.i_1_3, origin: "i_1_3"},
-    //     i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
-    //     i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
-    //     WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
-    //   };
-    //   return CA;}
-    // case ".grid-3": {
-    //   const CA = {
-    //     i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
-    //     i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
-    //     i_3: {data: i_3, color: color_palette.i_3, origin: "i_3"},
-    //     i_1_2: {data: [], color: color_palette.i_1_2, origin: "i_1_2"},
-    //     i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
-    //     i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
-    //     i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
-    //     WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
-    //   };
-    //   return CA;}
+    case ".grid-1": {
+      const CA = {
+        i_1: {data: i_1, color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: [], color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
+      };
+      return CA;}
+    case ".grid-2": {
+      const CA = {
+        i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: i_2, color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: [], color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: i_1_2, color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: [], color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
+      };
+      return CA;}
+    case ".grid-3": {
+      const CA = {
+        i_1: {data: [], color: color_palette.i_1, origin: "i_1"},
+        i_2: {data: [], color: color_palette.i_2, origin: "i_2"},
+        i_3: {data: i_3, color: color_palette.i_3, origin: "i_3"},
+        i_1_2: {data: [], color: color_palette.i_1_2, origin: "i_1_2"},
+        i_1_3: {data: i_1_3, color: color_palette.i_1_3, origin: "i_1_3"},
+        i_2_3: {data: i_2_3, color: color_palette.i_2_3, origin: "i_2_3"},
+        i_1_2_3: {data: i_1_2_3, color: color_palette.i_1_2_3, origin: "i_1_2_3"},
+        WFctrlCA: {data: wfctrlCA, color: color_palette.WFctrlCA, origin: "WFctrlCA"},
+      };
+      return CA;}
     case ".overlay": {
       const CA = {
         i_1: {data: i_1, color: color_palette.i_1, origin: "i_1"},
@@ -492,6 +492,7 @@ function getUserValues(tab_num) {
   return {
     // trainingtrials: document.getElementById('training_time_select').value,
     // trainingtrials: document.querySelector(tab_num + ' #training_time_select').value,
+    trainingtrials: "2000tt",
     pattern: "P" + pattern_values[document.querySelector(tab_num + ' #pattern_select').value],
     model:"M" + model_values[document.querySelector(tab_num + ' #model_select').value],
     ts: document.querySelector(tab_num + ' #ts_select').value,
@@ -523,7 +524,7 @@ function changeTab(tab_num) {
                    && d.SemType == type
                    && d.LabelType == metadata.label
                    && d.TimeStep == metadata.ts
-                   //&& d.TrainingTrials == metadata.trainingtrials
+                   && d.TrainingTrials == metadata.trainingtrials
                    && d.Pattern3i == metadata.pattern)});
         var new_CA = grid2column(data_subset, grid_class);
         // make results new CA - pass color map here?
