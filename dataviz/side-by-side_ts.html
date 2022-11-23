@@ -1,0 +1,1056 @@
+---
+title: CA Dynamics
+layout: dataviz
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+  <div class="two-col">
+    <div class="left"><p>This interactive figure shows cell assemblies of a brain-constrained
+deep neural network which learned to associate conceptual patterns
+representing concrete or abstract concepts with labels (word form
+patterns). The top 3 rows show instance-CAs, whereas the bottom
+row shows an overlay of the entire concept-CA. In each row, the 12
+areas are arranged in the same way as in Fig 2A/B of the paper <a href="https://dx.doi.org/10.1007/s00426-021-01591-6" target="_blank">Henningsen-Schomers et al. (2021)</a> (i.e., extra-sylvian areas on top, peri-sylvian areas on
+the bottom).</p>
+    <p>You can view the cell assemblies of the model that was
+    trained with conceptual patterns only ("No Label", <a href="https://dx.doi.org/10.1007/s00426-021-01591-6" target="_blank">Henningsen-Schomers et al., 2021, <i>Psychological Research</i></a>) or of the model that learnt concept-to-label associations
+    ("Label", Henningsen-Schomers et al., 2022, under review, OSF link:
+    <a href="https://osf.io/eqxh3/" target="_blank">https://osf.io/eqxh3/</a>). Finally, you can watch full simulations of model activity, starting with stimulation of the primary visual and primary motor cortex.</p>
+    </div>
+
+    <div class="right">
+      <img alt="Figure showing the connectivity between the twelve model areas." src="../assets/Fig2B_area-structure.png"/>
+      <p class="caption">Adapted from Henningsen-Schomers & Pulvermüller (2021) Modelling concrete and abstract concepts using brain-constrained
+    deep neural networks, https://doi.org/10.1007/s00426-021-01591-6, published under a <a href="http://creativecommons.org/licenses/by/4.0/ " target="_blank">CC-BY-4.0 license</a>.</p>
+    </div>
+  </div>
+  <!--Begin Result Tabs-->
+  <div class="tabbed">
+    <input checked="checked" id="tab1" type="radio" name=tabs/>
+    <input id="tab2" type="radio" name=tabs/>
+    <nav>
+      <label for="tab1">Concrete</label>
+      <label for="tab2">Abstract</label>
+    </nav>
+    <figure>
+      <div class="tab1">
+        <div class="menu-center">
+          <div class="choices">
+            <label for="pattern_select"><b>Concept</b></label>
+            <div id="pattern_output"></div>
+            <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1" oninput="changeTab('.tab1')">
+          </div>
+          <div class="choices">
+            <label for="model_select"><b>Model</b></label>
+            <div id="model_output"></div>
+            <input id="model_select" class="slider" type="range" min="0", value="0" max="11" step="1" oninput="changeTab('.tab1')">
+          </div>
+
+          <div class="choices">
+            <label for="label_select">Labelled Concepts</label>
+            <select name="label_select" class="label_select" id="label_select" oninput="changeTab('.tab1')">
+              <option value="no-label">No Label</option>
+              <option value="label">Label</option>
+            </select>
+          </div>
+          <div class="choices">
+            <label for="show_control">Show wordform control?</label>
+            <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab1')"/>
+          </div>
+          <!-- <div class="choices">
+            <label for="training_time_select">Training Time</label>
+            <select name="training_time_select" class="training_time_select" id="training_time_select" oninput="changeTab('.tab1')">
+              <option value="4000tt">4000tt</option>
+              <option value="2000tt">2000tt</option>
+            </select>
+          </div> -->
+          <div class="choices">
+            <label for="palette_select">Color Palette</label>
+            <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab1')">
+              <option value="original">Original Paper</option>
+              <option value="dark">Bright</option>
+              <!-- <option value="solarized-dark">Solarized Dark</option>
+              <option value="solarized-light">Solarized Light</option> -->
+              <option value="r-colorblind">R Colorblind</option>
+            </select>
+          </div>
+          <div class="choices">
+            <div id="palette"></div>
+            <!-- <img src="/assets/img/instance_triangle.png" /> -->
+          </div>
+        </div>
+
+      <div class="grid-wrapper">
+      <div class="instance" id="instance-1"></div>
+      <div class="area-grid">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts1"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts1"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts1"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts1"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts1"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts1"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts1"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts1"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts1"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts1"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts1"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts1"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-2"></div>
+      <div class="area-grid-2">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts2"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts2"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts2"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts2"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts2"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts2"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts2"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts2"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts2"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts2"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts2"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts2"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-3"></div>
+      <div class="area-grid-3">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts3"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts3"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts3"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts3"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts3"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts3"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts3"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts3"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts3"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts3"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts3"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-4"></div>
+      <div class="area-grid-4">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts4"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts4"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts4"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts4"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts4"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts4"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts4"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts4"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts4"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts4"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts4"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts4"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-5"></div>
+      <div class="area-grid-5">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts5"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts5"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts5"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts5"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts5"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts5"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts5"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts5"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts5"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts5"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts5"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts5"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-6"></div>
+      <div class="area-grid-6">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts6"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts6"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts6"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts6"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts6"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts6"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts6"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts6"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts6"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts6"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts6"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-7"></div>
+      <div class="area-grid-7">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts7"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts7"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts7"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts7"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts7"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts7"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts7"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts7"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts7"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts7"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts7"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts7"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-8"></div>
+      <div class="area-grid-8">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts8"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts8"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts8"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts8"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts8"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts8"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts8"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts8"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts8"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts8"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts8"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts8"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-9"></div>
+      <div class="area-grid-9">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts9"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts9"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts9"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts9"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts9"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts9"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts9"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts9"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts9"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts9"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts9"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-10"></div>
+      <div class="area-grid-10">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts10"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts10"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts10"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts10"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts10"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts10"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts10"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts10"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts10"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts10"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts10"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts10"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-11"></div>
+      <div class="area-grid-11">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts11"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts11"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts11"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts11"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts11"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts11"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts11"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts11"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts11"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts11"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts11"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts11"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-12"></div>
+      <div class="area-grid-12">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts12"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts12"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts12"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts12"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts12"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts12"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts12"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts12"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts12"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts12"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts12"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-13"></div>
+      <div class="area-grid-13">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts13"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts13"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts13"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts13"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts13"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts13"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts13"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts13"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts13"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts13"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts13"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts13"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-14"></div>
+      <div class="area-grid-14">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts14"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts14"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts14"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts14"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts14"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts14"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts14"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts14"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts14"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts14"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts14"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts14"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-15"></div>
+      <div class="area-grid-15">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts15"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts15"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts15"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts15"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts15"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts15"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts15"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts15"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts15"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts15"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts15"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts15"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-16"></div>
+      <div class="area-grid-16">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts16"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts16"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts16"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts16"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts16"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts16"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts16"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts16"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts16"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts16"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts16"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts16"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+
+      </div> <!--End grid-wrapper -->
+    </div> <!--End tab1 -->
+    <div class="tab2">
+      <div class="menu-center">
+        <div class="choices">
+          <label for="pattern_select"><b>Concept</b></label>
+          <div id="pattern_output"></div>
+          <input id="pattern_select" class="slider" type="range" min="0", value="0", max="9" step="1" oninput="changeTab('.tab2')">
+        </div>
+        <div class="choices">
+          <label for="model_select"><b>Model</b></label>
+          <div id="model_output"></div>
+          <input id="model_select" class="slider" type="range" min="0", value="0" max="11" step="1" oninput="changeTab('.tab2')">
+        </div>
+
+        <div class="choices">
+          <label for="label_select">Labelled Concepts</label>
+          <select name="label_select" class="label_select" id="label_select" oninput="changeTab('.tab2')">
+            <option value="no-label">No Label</option>
+            <option value="label">Label</option>
+          </select>
+        </div>
+        <div class="choices">
+          <label for="show_control">Show wordform control?</label>
+          <input type="checkbox" id="show_control" name="show_control" oninput="changeTab('.tab2')"/>
+        </div>
+        <!-- <div class="choices">
+          <label for="training_time_select">Training Time</label>
+          <select name="training_time_select" class="training_time_select" id="training_time_select" oninput="changeTab('.tab2')">
+            <option value="4000tt">4000tt</option>
+            <option value="2000tt">2000tt</option>
+          </select>
+        </div> -->
+        <!-- <div class="choices">
+          <label for="palette_select">Color Palette</label>
+          <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker()">
+            <option value="original">Original Paper</option>
+            <option value="dark">Dark</option>
+            <option value="solarized-dark">Solarized Dark</option>
+            <option value="solarized-light">Solarized Light</option>
+            <option value="r-colorblind">R Colorblind</option>
+          </select>
+        </div> -->
+        <div class="choices">
+        <label for="palette_select">Color Palette</label>
+        <select name="palette_select" class="palette_select" id="palette_select" onchange="palette_picker('.tab2')">
+          <option value="original">Original Paper</option>
+          <option value="dark">Bright</option>
+          <!-- <option value="solarized-dark">Solarized Dark</option>
+          <option value="solarized-light">Solarized Light</option> -->
+          <option value="r-colorblind">R Colorblind</option>
+        </select>
+        </div>
+        <div class="choices">
+          <div id="palette"></div>
+          <!-- <img src="/assets/img/instance_triangle.png" /> -->
+        </div>
+      </div>
+
+    <div class="grid-wrapper">
+      <div class="instance" id="instance-1"></div>
+      <div class="area-grid">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts1"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts1"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts1"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts1"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts1"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts1"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts1"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts1"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts1"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts1"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts1"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts1"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-2"></div>
+      <div class="area-grid-2">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts2"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts2"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts2"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts2"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts2"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts2"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts2"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts2"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts2"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts2"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts2"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts2"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-3"></div>
+      <div class="area-grid-3">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts3"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts3"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts3"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts3"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts3"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts3"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts3"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts3"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts3"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts3"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts3"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts3"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-4"></div>
+      <div class="area-grid-4">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts4"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts4"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts4"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts4"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts4"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts4"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts4"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts4"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts4"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts4"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts4"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts4"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-5"></div>
+      <div class="area-grid-5">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts5"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts5"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts5"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts5"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts5"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts5"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts5"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts5"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts5"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts5"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts5"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts5"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-6"></div>
+      <div class="area-grid-6">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts6"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts6"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts6"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts6"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts6"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts6"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts6"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts6"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts6"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts6"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts6"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts6"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-7"></div>
+      <div class="area-grid-7">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts7"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts7"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts7"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts7"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts7"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts7"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts7"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts7"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts7"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts7"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts7"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts7"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-8"></div>
+      <div class="area-grid-8">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts8"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts8"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts8"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts8"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts8"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts8"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts8"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts8"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts8"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts8"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts8"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts8"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-9"></div>
+      <div class="area-grid-9">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts9"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts9"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts9"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts9"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts9"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts9"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts9"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts9"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts9"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts9"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts9"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts9"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-10"></div>
+      <div class="area-grid-10">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts10"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts10"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts10"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts10"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts10"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts10"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts10"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts10"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts10"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts10"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts10"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts10"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-11"></div>
+      <div class="area-grid-11">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts11"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts11"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts11"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts11"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts11"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts11"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts11"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts11"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts11"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts11"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts11"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts11"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-12"></div>
+      <div class="area-grid-12">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts12"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts12"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts12"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts12"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts12"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts12"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts12"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts12"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts12"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts12"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts12"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts12"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-13"></div>
+      <div class="area-grid-13">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts13"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts13"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts13"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts13"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts13"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts13"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts13"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts13"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts13"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts13"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts13"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts13"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-14"></div>
+      <div class="area-grid-14">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts14"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts14"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts14"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts14"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts14"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts14"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts14"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts14"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts14"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts14"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts14"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts14"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-15"></div>
+      <div class="area-grid-15">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts15"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts15"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts15"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts15"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts15"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts15"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts15"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts15"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts15"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts15"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts15"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts15"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="instance" id="instance-16"></div>
+      <div class="area-grid-16">
+        <div class="row-1 hline-top">
+          <div class="functional-cortex" id="visual">
+            <div class="area overlay" id="area1-ts16"><p>V1</p></div>
+            <div class="area overlay" id="area2-ts16"><p>TO</p></div>
+            <div class="area overlay hub-top" id="area3-ts16"><p>AT</p></div>
+          </div>
+          <div class="functional-cortex" id="motor">
+            <div class="area overlay hub-top" id="area4-ts16"><p>PF_L</p></div>
+            <div class="area overlay" id="area5-ts16"><p>PM_L</p></div>
+            <div class="area overlay" id="area6-ts16"><p>M1_L</p></div>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="functional-cortex" id="auditory">
+            <div class="area overlay" id="area7-ts16"><p>A1</p></div>
+            <div class="area overlay" id="area8-ts16"><p>AB</p></div>
+            <div class="area overlay hub-bottom" id="area9-ts16"><p>PB</p></div>
+          </div>
+          <div class="functional-cortex" id="articulatory">
+            <div class="area overlay hub-bottom" id="area10-ts16"><p>PF_i</p></div>
+            <div class="area overlay" id="area11-ts16"><p>PM_i</p></div>
+            <div class="area overlay" id="area12-ts16"><p>M1_i</p></div>
+          </div>
+        </div>
+      </div>
+    </div> <!--End grid-wrapper -->
+    </div> <!--End tab2 -->
+  </figure>
+
+
+  <script type="text/javascript" src="../assets/js/areaGen_sidebyside.js"></script>
+</body>
+</html>
